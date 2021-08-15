@@ -1,45 +1,63 @@
 <template>
-  <main> 
-      <div class="Login">
-   <h1>Login</h1>
-   <input type="text" placeholder="Usuario">
-   <br>
-    <input type="password" placeholder="Senha">
-    <br>
-    <div class="btn-login">
-      <button>Login</button>
-    </div>
+  <main>
+    <div class="Login" id="login">
+      <h1>Login</h1>
+      <input type="text" placeholder="Username" v-model="form.username" />
+      <br />
+      <input type="password" placeholder="password" v-model="form.password" />
+      <br />
+      <div class="btn-login">
+        <button @click="login">Login</button>
+      </div>
     </div>
     <p>
-        Você não tem conta?
-        <a href="">crie uma conta</a>
-    </p>
-   
-    </main>
+      Você não tem conta?
+      <a href="">crie uma conta</a>
+    </p> 
+  </main>
 </template>
-
 <script>
-import api from '@/services/api.js';
+import api from '@/services/api'
 export default {
-    name: 'Login',
-    data(){
-        return {
-            Login: []
-        }
+  name: "Login",
+  data: () => ({
+    form: {
+      username: "",
+      password: "",
     },
- mounted(){
-     api.post('/api/v1/auth/login').then(response => {
-         this.Login = response.data;
-     });
- }
-}
+  }),
+  created(){
+   // this.ActionsSetUser({name: 'evan', password:'passoword'})
+
+  },
+  
+  methods: {
+  //  ...mapActions('auth',[ActionsSetUser]),
+    submit (){
+      console.log(this.from)
+    },
+    login: function () {
+    api
+      .post("/api/v1/auth/login", {
+        username: "evan",
+        password: "password",
+      })
+      .then((response) => {
+        console.log("resposta", response);
+        // this.Login = response.data;
+      });
+
+   }
+  }
+};
+
 </script>
 
 <style scoped>
-main {background-color: var(--color-background-home);
-justify-content: center;
-align-items: center;
+main {
+  background-color: var(--color-background-home);
+  justify-content: center;
+  align-items: center;
 }
-
-
 </style>
+ 
