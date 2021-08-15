@@ -1,5 +1,6 @@
 <template>
   <main>
+    {{ usurario }}
     <p>
       Pesquisa
 
@@ -14,16 +15,9 @@
             <img :src="produto.thumb" alt="produto.title" />
           </a>
           <div class="produto-link">{{ produto.beers }}</div> -->
-          {{
-              produto.name
-              
-          }}
+          {{ produto.name }}
           <img :src="produto.image_url" alt="produto.name" />
-          {{
-              produto.tagline
-          
-          }}
-          
+          {{ produto.tagline }}
         </div>
       </section>
     </section>
@@ -32,18 +26,26 @@
 
 <script>
 import api from "@/services/api.js";
+import jwt_decode from "jwt-decode";
+
 export default {
   name: "Produtos",
   data() {
     return {
       produtos: [],
       pesquisa: "",
+      usurario: "",
     };
   },
   beforeMount() {
-    const token = "Bearer " + localStorage.getItem("token");
+    const token = localStorage.getItem("token");
+    const decoded = jwt_decode(token);
+
+    this.usurario = decoded.user.name;
+
+    const authorization = "Bearer " + token;
     const headers = {
-      authorization: token,
+      authorization: authorization,
     };
 
     api
