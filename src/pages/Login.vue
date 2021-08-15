@@ -32,8 +32,7 @@ export default {
     submit (){
       console.log(this.from)
     },
-    login: function () {
-    api
+    login: function () { api
       .post("/api/v1/auth/login", {
         username: this.form.username,
         password: this.form.password,

@@ -1,83 +1,86 @@
 <template>
-    <main>
-       <p>
-            Pesquisa
-            
-            <input type="text" v-model="pesquisa">
-            </p>
-        <section class="container">
-            <h1>Produtos</h1>
+  <main>
+    <p>
+      Pesquisa
 
-        <section class="Produtos">
-           <div v-for="(produtor, index) in produtor" class="produto" :key="index">
-            <a class="produto" :href="produtor.beers" target="_blank">
-                <img :src="produto.thumb" alt="produto.title">
-                </a>
- <div class="produtos-link">{{produtos.beers}}
-     </div>
- </div>
-        </section>
-        </section>
-    </main>
+      <input type="text" v-model="pesquisa" />
+    </p>
+    <section class="container">
+      <h1>Produtos</h1>
+
+      <section class="Produtos">
+        <div v-for="(produtos, index) in produtos" class="produto" :key="index">
+          <a class="produto" :href="produtos.beers" target="_blank">
+            <img :src="produto.thumb" alt="produto.title" />
+          </a>
+          <div class="produtos-link">{{ produtos.beers }}</div>
+        </div>
+      </section>
+    </section>
+  </main>
 </template>
 
 <script>
-import api from '@/services/api.js';
+import api from "@/services/api.js";
 export default {
-    name: 'Produtos',
-    data(){
-        return {
-            produtos: [],
-            pesquisa: ''
-        
-        }
-    },
- mounted(){
-     api.get('/api/v1/beers/1').then(response => {
-         this.produtos = response.data;
-     });
- }
-}
+  name: "Produtos",
+  data() {
+    return {
+      produtos: [],
+      pesquisa: "",
+    };
+  },
+  beforeMount() {
+    const token = "Bearer " + localStorage.getItem("token");
+    const headers = {
+      authorization: token,
+    };
+
+    api
+      .get("/api/v1/beers", { headers })
+      .then((response) => {
+        this.produtos = response.data;
+      })
+      .catch((error) => {
+        console.warn("Error", error);
+      });
+  },
+};
 </script>
 
 <style scoped>
-
-main{
-
-    align-items: center;
+main {
+  align-items: center;
 }
 
 .produtos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
- .produto{
-     width: 80%;
-     margin-bottom: 30px;
- }
-.produto img{
-    width: 100%;
-
-    
+.produto {
+  width: 80%;
+  margin-bottom: 30px;
+}
+.produto img {
+  width: 100%;
 }
 
-.produto a{
-    color: var(--color-text-dark);
-    font-weight: 600;
-    text-align: center;
+.produto a {
+  color: var(--color-text-dark);
+  font-weight: 600;
+  text-align: center;
 }
 
-@media (min-width:700px){
-    .produtos
-   { flex-direction: row;
+@media (min-width: 700px) {
+  .produtos {
+    flex-direction: row;
     align-items: flex-start;
     flex-wrap: wrap;
-    }
+  }
 }
-.produto{
-    margin-right: 30px;
-    width: 300px;
+.produto {
+  margin-right: 30px;
+  width: 300px;
 }
 </style> 
