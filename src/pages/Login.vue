@@ -27,12 +27,8 @@ export default {
     },
   }),
   created(){
-   // this.ActionsSetUser({name: 'evan', password:'passoword'})
-
   },
-  
   methods: {
-  //  ...mapActions('auth',[ActionsSetUser]),
     submit (){
       console.log(this.from)
     },
@@ -43,14 +39,13 @@ export default {
         password: this.form.password,
       })
       .then((response) => {
-        console.log("resposta", response);
-        this.$router.replace("produtos");
+       // console.log("resposta", response.data.data.access_token);
+        localStorage.setItem('token', response.data.data.access_token);
+         this.$router.replace("produtos");
       }).catch((error) => {
         alert('Login ou password inválidos!');
         console.log(error);
       }); 
-
-
    }
   }
 };
