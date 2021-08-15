@@ -9,11 +9,21 @@
       <h1>Produtos</h1>
 
       <section class="Produtos">
-        <div v-for="(produtos, index) in produtos" class="produto" :key="index">
-          <a class="produto" :href="produtos.beers" target="_blank">
+        <div v-for="(produto, index) in produtos" class="produto" :key="index">
+          <!-- <a class="produto" :href="produto.beers" target="_blank">
             <img :src="produto.thumb" alt="produto.title" />
           </a>
-          <div class="produtos-link">{{ produtos.beers }}</div>
+          <div class="produto-link">{{ produto.beers }}</div> -->
+          {{
+              produto.name
+              
+          }}
+          <img :src="produto.image_url" alt="produto.name" />
+          {{
+              produto.tagline
+          
+          }}
+          
         </div>
       </section>
     </section>
