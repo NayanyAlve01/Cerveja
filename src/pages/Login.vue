@@ -39,13 +39,17 @@ export default {
     login: function () {
     api
       .post("/api/v1/auth/login", {
-        username: "evan",
-        password: "password",
+        username: this.form.username,
+        password: this.form.password,
       })
       .then((response) => {
         console.log("resposta", response);
-        // this.Login = response.data;
-      });
+        this.$router.replace("produtos");
+      }).catch((error) => {
+        alert('Login ou password inválidos!');
+        console.log(error);
+      }); 
+
 
    }
   }
