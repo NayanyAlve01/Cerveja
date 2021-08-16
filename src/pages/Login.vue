@@ -1,17 +1,6 @@
 <template>
   <main>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-  <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/styles" href="styles/util.css">
-	<link rel="stylesheet" type="text/styles" href="styles/global.css">
-<!--===============================================================================================-->
 
-  </head>
     <div class="limiter">
       <div class="container-login100" style="background-image">
     <div class="Login" id="login">
@@ -147,99 +136,6 @@ main {
 
 
 
-/*------------------------------------------------------------------
-[ Input ]*/
-
-.wrap-input100 {
-  width: 100%;
-  position: relative;
-  border-bottom: 2px solid #d9d9d9;
-}
-
-.label-input100 {
-  font-family: Poppins-Regular;
-  font-size: 14px;
-  color: #333333;
-  line-height: 1.5;
-  padding-left: 7px;
-}
-
-.input100 {
-  font-family: Poppins-Medium;
-  font-size: 16px;
-  color: #333333;
-  line-height: 1.2;
-
-  display: block;
-  width: 100%;
-  height: 55px;
-  background: transparent;
-  padding: 0 7px 0 43px;
-}
-
-/*---------------------------------------------*/
-.focus-input100 {
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-}
-
-.focus-input100::after {
-  content: attr(data-symbol);
-  font-family: Material-Design-Iconic-Font;
-  color: #adadad;
-  font-size: 22px;
-
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  height: calc(100% - 20px);
-  bottom: 0;
-  left: 0;
-  padding-left: 13px;
-  padding-top: 3px;
-}
-
-.focus-input100::before {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #7f7f7f;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  transition: all 0.4s;
-}
-
-
-.input100:focus + .focus-input100::before {
-  width: 100%;
-}
-
-.has-val.input100 + .focus-input100::before {
-  width: 100%;
-}
-
-.input100:focus + .focus-input100::after {
-  color: #a64bf4;
-}
-
-.has-val.input100 + .focus-input100::after {
-  color: #a64bf4;
-}
 
 
 </style>

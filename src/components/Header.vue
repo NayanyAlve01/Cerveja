@@ -1,97 +1,84 @@
 <template>
-  <header>
+    <header> 
     <nav class="container">
-      <ul>
-        <li><a href="/">Login</a></li>
-        <li><a href="/produtos">produtos</a></li>
-      </ul>
+   
+
+        <ul>
+            
+            <li><a href="/">Login</a></li>
+            <li><a href="/produtos">produtos</a></li>
+            </ul>
+       
     </nav>
-  </header>
+    </header>
 </template>
 
 <script>
-export default {
-  nome: "Header",
-  data() {
-    return {
-      menuActive: false,
-    };
-  },
-  methods: {
-    openMenu: function () {
-      this.menuActive = true;
+export default{
+    nome: 'Header',
+    data(){
+        return{
+        menuActive: false
+        }
     },
-    closeMenu: function () {
-      this.menuActive = true;
-    },
-  },
-};
+    methods:{
+        openMenu: function(){
+            this.menuActive = true;
+        },
+        closeMenu: function(){
+            this.menuActive = true;
+        }
+
+
+            
+        }
+}
+
 </script>
 
 <style scoped>
-header {
-  background-color: var(--color-background-nav);
-  width: 100%;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+header{
+    background-color: var(--color-background-nav);
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 nav {
-  display: flex;
-  justify-content: space-between;
-  height: 10px;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    height: 10px;
+    align-items: center;
 }
 
-#menu-items {
-  position: fixed;
-  top: 0;
-  right: 0;
-  background-color: var(--color-background-nav);
-  width: 60%;
-  height: 100vh;
-  display: none;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+ul{
+    list-style: none;
+    text-align: center;
+     width: 100%;
+    height: 30px;
+    justify-items: left;
 }
 
-#menu-items.active {
-  display: flex;
+ul li{
+    margin:20px 0px;
+}
+ ul li a{
+     color: var(--color-text-light)
+ }
+
+@media (min-width:576px){
 }
 
-ul {
-  list-style: none;
-  text-align: center;
-  width: 100%;
-  height: 30px;
-  justify-items: left;
-}
-
-ul li {
-  margin: 20px 0px;
-}
-ul li a {
-  color: var(--color-text-light);
-}
-
-@media (min-width: 576px) {
-}
-#menu-items {
-  display: flex;
-  position: static;
-  height: 60px;
-  width: auto;
-}
-ul {
-  display: flex;
-  flex-direction: row;
-  height: 60px;
-  align-items: center;
+ul{
+    display: flex;
+    flex-direction: row-reverse;
+    height: 60px;
+    align-items: center;
 }
 ul li {
-  margin: 0;
-  margin-left: 20px;
+    margin: 0;
+    margin-left: 20px;
 }
+
 </style>

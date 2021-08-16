@@ -1,5 +1,5 @@
 :root {
-    --color-background:white;
+    --color-background:write;
     --color-background-nav:#2B3D50;
     --color-background-home:#344960;
     --color-text-light:hsl(0, 100%, 100%);
@@ -8,7 +8,7 @@
   }
 
   *{
-      padding: 1;
+      padding: 0;
       margin: 0;
       box-sizing: border-box;
       font-family: sans-serif;
@@ -23,6 +23,11 @@
   a{text-decoration: nome;
 transition: 0.2s opacity;  
 }
+
+  
+  a:hover{
+opacity: 0.8;
+  }
 
 
 .container{
@@ -39,7 +44,6 @@ main {
 h1{
 
     color: var(--color-text-dark);
-    margin: 50px 0;
+    margin: 40px 0;
     font-size:  30px;
-    font-family: inherit;
 }
