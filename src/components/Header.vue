@@ -6,7 +6,7 @@
         <ul>
             
             <li><a href="/">Login</a></li>
-            <li><a href="/produtos">produtos</a></li>
+            <li><a href="/produtos">Beers</a></li>
             </ul>
        
     </nav>
@@ -80,5 +80,6 @@ ul li {
     margin: 0;
     margin-left: 20px;
 }
+
 
 </style>

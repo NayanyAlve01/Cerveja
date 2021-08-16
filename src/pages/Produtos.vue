@@ -4,7 +4,7 @@
       {{ usurario }}
     </section>
 
-    <div id="divBusca">
+    <section class="divBusca">
       <input
         type="text"
         v-model="pesquisa"
@@ -12,38 +12,40 @@
         placeholder="Buscar..."
       />
       <button id="btnBusca">Buscar</button>
-    </div>
-
+    </section>
     <h1>Produtos</h1>
 
     <div class="bg"></div>
-    <section class="Produtos">
+    <section class="produtos">
       <div v-for="(produto, index) in produtos" class="produto" :key="index">
-        <!-- <a class="produto" :href="produto.beers" target="_blank">
+        <div class="produto-container">
+          <!-- <a class="produto" :href="produto.beers" target="_blank">
             <img :src="produto.thumb" alt="produto.title" />
           </a>
           <div class="produto-link">{{ produto.beers }}</div> -->
-        <p>
-          {{ produto.name }}
-        </p>
-        <!-- <p>
+          <p id="beer-name">
+            {{ produto.name }}
+          </p>
+          <hr>
+          <!-- <p>
           <img :src="produto.image_url" alt="produto.name" />
           </p> -->
-        <p>
-          {{ produto.first_brewed }}
-        </p>
-        <p>
-          {{ produto.abv }}
-        </p>
-        <p>
-          {{ produto.ibu }}
-        </p>
-        <p>
-          {{ produto.ph }}
-        </p>
-        <p>
-          {{ produto.attenuation_level }}
-        </p>
+          <p id="fb">
+           Fabricado em:  {{ produto.first_brewed }}
+          </p>
+          <p id="abv">
+           ABV: {{ produto.abv }}
+          </p>
+          <p id="ibu">
+           IBU: {{ produto.ibu }}
+          </p>
+          <p id="ph">
+            PH: {{ produto.ph }}
+          </p>
+          <p id="al">
+            Attenuation Level: {{ produto.attenuation_level }}
+          </p>
+        </div>
       </div>
     </section>
   </main>
@@ -87,22 +89,42 @@ export default {
 </script>
 
 <style scoped>
-main {
-  align-items: center;
-   justify-content: center;
-}
-
-.produtos {
+/* .produtos {
   display: flex;
   flex-direction: column;
   align-items: center;
+} */
+#fb{
+  
+}
+
+#beer-name{
+  font-weight: bold;
+}
+
+.produtos{
+display: flex;
+
+
 }
 .produto {
-  width: 80%;
-  margin-bottom: 30px;
-  display: inline-block;
-  margin-right: 30px;
-  width: 300px;
+  display: flex;
+  justify-content: center;
+  margin: 30px 40px;
+  width: 340px;
+  height: 160px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+  
+  
+}
+
+.produto-container {
+  
+  margin: 10px 0;
+  width: 82%;
+
 }
 .produto img {
   width: 30%;
@@ -118,47 +140,22 @@ main {
   }
 }
 /* --------------------------------- pesquisa */
-/* #divBusca {
-  align-items: flex-end;
-  background-color: #e0eeee;
-  border: solid 2px #2b3d50;
+.divBusca {
   border-radius: 10px;
-  width: 150px;
   height: 34px;
-  justify-content: left;
-  align-items: left;
+  text-align: right;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin-top: -15px;
 }
-
-#txtBusca {
-  float: left;
-  background-color: transparent;
-  padding-left: 15px;
-  font-size: 18px;
-  border: none;
-  height: 32px;
-  width: 86px;
-}
-
-#btnBusca {
-  border: none;
-  float: left;
-  height: 32px;
-  border-radius: 0 7px 7px 0;
-  width: 60px;
-  font-weight: bold;
-  background: #2b3d50;
-} */
-
-/* --------------------- */
 
 .usurario {
-  
-  color: black;
+  color: white;
   width: 100%;
   flex-direction: row;
-  height: 80px;
-  margin: 10;
-  margin-left: 50px;
-
+  height: 50px;
+  margin-left: 20px;
+  margin-top: -22px;
 }
 </style> 
