@@ -1,14 +1,14 @@
 :root {
-    --color-background:#f3f3f3;
+    --color-background:white;
     --color-background-nav:#2B3D50;
     --color-background-home:#344960;
-    --color-text-light:#EDEDED;
+    --color-text-light:hsl(0, 100%, 100%);
     --color-text-title:#FF5555;
     --color-text-dark:#0a0a0a;
   }
 
   *{
-      padding: 0;
+      padding: 1;
       margin: 0;
       box-sizing: border-box;
       font-family: sans-serif;
@@ -23,11 +23,6 @@
   a{text-decoration: nome;
 transition: 0.2s opacity;  
 }
-
-  
-  a:hover{
-opacity: 0.8;
-  }
 
 
 .container{
@@ -44,6 +39,7 @@ main {
 h1{
 
     color: var(--color-text-dark);
-    margin: 40px 0;
+    margin: 50px 0;
     font-size:  30px;
+    font-family: inherit;
 }

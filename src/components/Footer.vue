@@ -27,8 +27,8 @@ return {
 <style scoped>
 
 footer{
-    width: 250vh;
-    height: 60px;
+    width: 100%;
+    height: 20px;
     background-color: var(--color-background-nav);
     display: flex;
     justify-content: center;
