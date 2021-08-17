@@ -11,7 +11,7 @@
         id="txtBusca"
         placeholder="Buscar..."
       />
-      <button id="btnBusca">Buscar</button>
+      <button id="btnBusca" @click="getBeerName">Buscar</button>
       <button class="btn-random" @click="getRandomBeer">Random</button>
     </section>
 
@@ -22,7 +22,8 @@
 
     <div class="bg"></div>
     <section class="produtos">
-      <div v-for="(produto, index) in produtos" class="produto" :key="index">
+    <!-- <div class="produto"> -->
+      <div v-for="(produto, index) in produtos" class="produto"  :key="index">
         <div class="produto-container">
           <!-- <a class="produto" :href="produto.beers" target="_blank">
             <img :src="produto.thumb" alt="produto.title" />
@@ -61,7 +62,7 @@
             </div>
           </div>
           <div class="btn-descricao">
-            
+          
             <button
               class="descricao"
               @click="showDynamicComponentModal(produto.id)"
@@ -71,7 +72,9 @@
           </div>
         </div>
       </div>
+      
     </section>
+
   </main>
 </template>
 
@@ -93,6 +96,7 @@ export default {
       usurario: "",
       showModal: false,
       headers: {},
+      // beerName: "",
     };
   },
   created() {
@@ -145,19 +149,24 @@ export default {
           console.warn("Error", error);
         });
     },
-  getRandomBeer(){
-     const endpoind = "/api/v1/beers/random";
-      api
-        .get(endpoind, { headers: this.headers })
-        .then((response) => {
-          this.showDynamicComponentModal(response.data[0].id)
+    getRandomBeer() {
+      const endpoind = "/api/v1/beers/random";
+      api.get(endpoind, { headers: this.headers }).then((response) => {
+        this.showDynamicComponentModal(response.data[0].id);
+      });
+    },
+    getBeerName(){
+      const name = this.pesquisa;
+       const endpoind = `/api/v1/beers?beer_name=${name}` ;
+      api.get(endpoind, { headers: this.headers }).then((response) => {
+        this.$nextTick(function (){
+          this.produtos = response.data;
 
-        })
-  }
-  
-  
+            }
+        )},
+      );
+    }
   },
-
 };
 </script>
 
