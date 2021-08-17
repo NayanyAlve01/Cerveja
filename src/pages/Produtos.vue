@@ -74,7 +74,7 @@
       </div>
       
     </section>
-
+<pagination :records="500" v-model="page" :per-page="10" @paginate="callback"/>
   </main>
 </template>
 
@@ -83,11 +83,13 @@ import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
 import Modal from "../components/Modal";
 import ModalCustom from "../components/ModalCustom";
+import Pagination from 'vue-pagination-2';
 
 export default {
   name: "Produtos",
   components: {
     Modal,
+    Pagination,
   },
   data() {
     return {
@@ -96,6 +98,7 @@ export default {
       usurario: "",
       showModal: false,
       headers: {},
+      page: 1
       // beerName: "",
     };
   },
@@ -165,7 +168,15 @@ export default {
             }
         )},
       );
-    }
+    
+    },
+    // callback(page){
+    //    this.$nextTick(function (){
+    //      this.page++
+    //   console.log("testando")
+    //   console.log(page)
+    // }
+    //    )}
   },
 };
 </script>
