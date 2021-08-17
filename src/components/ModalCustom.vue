@@ -1,19 +1,43 @@
 <template>
-  <div class="example-modal-content">
-    <h1>This is a custom component</h1>
-    <p>{{ text }}</p>
-    <p>{{ name }}</p>
-    <p>{{ tagline }}</p>
-    <p>{{ description }}</p>
-    <p>{{ imagem }}</p>
-    <p>{{ volume }}</p>
-    <p>{{ ingredients }}</p>
-    <p>{{ food_pairing }}</p>
+  <div class="modal-content">
+    <div class="title">
+      <h2> {{ name }}</h2>
+    </div>
+    <div class="descriptions">
+      <div class="information">
+        <p>tagline: {{ tagline }}</p>
+        <p>Descrição: {{ description }}</p>
+        <p>Volume: {{ volume }}</p>
+        <p>ingredientes: {{ ingredients }}</p>
+        <p>Food Pairing: {{ food_pairing }}</p>
+      </div>
+      <div class="description-img">
+        <p>Imagem: {{ image_url }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['text', 'name', 'tagline', 'description', 'imagem', 'volume', 'ingredients', 'food_pairing']
-}
+  props: [
+    "name",
+    "tagline",
+    "description",
+    "image_url",
+    "volume",
+    "ingredients",
+    "food_pairing",
+  ],
+};
 </script>
+<style scoped>
+.modal-content {
+  border: 1px solid red;
+
+  /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+</style>
+

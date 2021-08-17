@@ -1,6 +1,7 @@
 <template>
   <modal 
     name="example-adaptive"
+    :min-height=" 600"
     :adaptive="true"
   >
     <div class="example-modal-content">

@@ -59,7 +59,12 @@
           </div>
           <div class="btn-descricao">
             <!-- <button class="descricao" @click="$modal.show('example-adaptive')">Descrição</button> -->
-            <button class="descricao" @click="showDynamicComponentModal(produto.id)">Descrição</button>
+            <button
+              class="descricao"
+              @click="showDynamicComponentModal(produto.id)"
+            >
+              Descrição
+            </button>
           </div>
         </div>
       </div>
@@ -84,12 +89,13 @@ export default {
       pesquisa: "",
       usurario: "",
       showModal: false,
+      headers: {},
     };
   },
-created() {
+  created() {
     setInterval(() => {
-      this.canBeShown = !this.canBeShown
-    }, 5000)
+      this.canBeShown = !this.canBeShown;
+    }, 5000);
   },
 
   beforeMount() {
@@ -99,12 +105,12 @@ created() {
     this.usurario = decoded.user.name;
 
     const authorization = "Bearer " + token;
-    const headers = {
+    this.headers = {
       authorization: authorization,
     };
 
     api
-      .get("/api/v1/beers", { headers })
+      .get("/api/v1/beers", { headers: this.headers })
       .then((response) => {
         this.produtos = response.data;
       })
@@ -135,27 +141,47 @@ created() {
     //   )
     // },
 
+    showDynamicComponentModal(id) {
+      const endpoind = "/api/v1/beers/" + id;
 
-  showDynamicComponentModal(data) { console.log('Dados do modal', data)
-      this.$modal.show(ModalCustom, {
-        text: "TU E DEMAIS",
-        name: "tiago",
-        tagline: "nayany",
-        description: "jjjj",
-         imagem:"dddd", 
-         volume:"fjfjf", 
-         ingredients:"sfkopskf", 
-         food_pairing: "admakdokad",
+      api
+        .get(endpoind, { headers: this.headers })
+        .then((response) => {
+          console.log(response.data)
+          const produto = response.data[0];
+          this.$modal.show(ModalCustom, {
+            name: produto.name,
+            tagline: produto.tagline,
+            description: produto.description,
+            image_url: produto.image_url,
+            volume: produto.volume,
+            ingredients: produto.ingredients,
+            food_pairing: produto.food_pairing,
+          },
+          
+          );
 
-      })
+          
+        })
+        .catch((error) => {
+          console.warn("Error", error);
+        });
+
+      // console.log('Dados do modal'+ id)
+      //   this.$modal.show(ModalCustom, {
+      //     text: "TU E DEMAIS",
+      //     name: "tiago",
+      //     tagline: "nayany",
+      //     description: "jjjj",
+      //      imagem:"dddd",
+      //      volume:"fjfjf",
+      //      ingredients:"sfkopskf",
+      //      food_pairing: "admakdokad",
+
+      //   })
     },
-  }
-
-
-  
+  },
 };
-
-
 </script>
 
 
@@ -250,4 +276,16 @@ created() {
   margin-left: 20px;
   margin-top: -22px;
 }
+
+
+.modal-content{
+  border: 1px  solid green;
+  height: 100%;
+    width: 100%;
+/*
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
 </style> 
