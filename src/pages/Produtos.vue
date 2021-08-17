@@ -12,9 +12,10 @@
         placeholder="Buscar..."
       />
       <button id="btnBusca">Buscar</button>
+      <button class="btn-random" @click="getRandomBeer">Random</button>
     </section>
 
-    <modal :min-height=600 />
+    <modal :min-height="600" />
 
     <!-- <modal-custom-dois/> -->
     <h1>Produtos</h1>
@@ -60,7 +61,7 @@
             </div>
           </div>
           <div class="btn-descricao">
-            <!-- <button class="descricao" @click="testemodal(produto.id)">Descrição</button> -->
+            
             <button
               class="descricao"
               @click="showDynamicComponentModal(produto.id)"
@@ -80,13 +81,10 @@ import jwt_decode from "jwt-decode";
 import Modal from "../components/Modal";
 import ModalCustom from "../components/ModalCustom";
 
-
 export default {
   name: "Produtos",
   components: {
     Modal,
-    
-
   },
   data() {
     return {
@@ -147,8 +145,19 @@ export default {
           console.warn("Error", error);
         });
     },
-  
+  getRandomBeer(){
+     const endpoind = "/api/v1/beers/random";
+      api
+        .get(endpoind, { headers: this.headers })
+        .then((response) => {
+          this.showDynamicComponentModal(response.data[0].id)
+
+        })
   }
+  
+  
+  },
+
 };
 </script>
 
