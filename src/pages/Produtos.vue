@@ -21,6 +21,9 @@
     <h1>Produtos</h1>
 
     <div class="bg"></div>
+            <input type="radio" @click="teor" name="teor"
+            value="menor"> 0% - 10% |
+            <input type="radio" @click="teor" name="teor" value="maior"> 10% - 55%
     <section class="produtos">
     <!-- <div class="produto"> -->
       <div v-for="(produto, index) in produtos" class="produto"  :key="index">
@@ -164,12 +167,21 @@ export default {
       api.get(endpoind, { headers: this.headers }).then((response) => {
         this.$nextTick(function (){
           this.produtos = response.data;
-
-            }
-        )},
-      );
-    
+           })
+        });
     },
+    teor(valor){
+      const teorBusca = (valor.target.value === "menor") ? "lt" : "gt"  
+       const endpoind = `/api/v1/beers?abv_${teorBusca}=10`;
+      api.get(endpoind, { headers: this.headers }).then((response) => {
+        this.$nextTick(function (){
+          this.produtos = response.data;
+           })
+          // console.log(response.data)
+        });
+      // console.log(valor)
+
+    }
     // callback(page){
     //    this.$nextTick(function (){
     //      this.page++

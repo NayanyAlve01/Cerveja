@@ -1,14 +1,14 @@
 <template>
     <header> 
     <nav class="container">
-   
 
         <ul>
             
             <li><a href="/">Login</a></li>
+
             <li><a href="/produtos">Beers</a></li>
             </ul>
-       
+      
     </nav>
     </header>
 </template>
