@@ -74,22 +74,22 @@
       </div>
       
     </section>
-<pagination :records="500" v-model="page" :per-page="10" @paginate="callback"/>
+<!-- ----------------------------- -->
+
   </main>
 </template>
 
 <script>
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
-import Modal from "../components/Modal";
+
 import ModalCustom from "../components/ModalCustom";
-import Pagination from 'vue-pagination-2';
+
 
 export default {
   name: "Produtos",
   components: {
-    Modal,
-    Pagination,
+    
   },
   data() {
     return {
