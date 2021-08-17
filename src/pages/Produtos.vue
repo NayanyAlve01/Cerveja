@@ -13,6 +13,8 @@
       />
       <button id="btnBusca">Buscar</button>
     </section>
+
+    <modal />
     <h1>Produtos</h1>
 
     <div class="bg"></div>
@@ -55,9 +57,10 @@
               <hr />
             </div>
           </div>
-            <div class="btn-descricao">
-              <button id="descricao">Descrição</button>
-            </div>
+          <div class="btn-descricao">
+            <!-- <button class="descricao" @click="$modal.show('example-adaptive')">Descrição</button> -->
+            <button class="descricao" @click="showDynamicComponentModal(produto.id)">Descrição</button>
+          </div>
         </div>
       </div>
     </section>
@@ -67,17 +70,28 @@
 <script>
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
+import Modal from "../components/Modal";
+import ModalCustom from "../components/ModalCustom";
 
 export default {
   name: "Produtos",
-
+  components: {
+    Modal,
+  },
   data() {
     return {
       produtos: [],
       pesquisa: "",
       usurario: "",
+      showModal: false,
     };
   },
+created() {
+    setInterval(() => {
+      this.canBeShown = !this.canBeShown
+    }, 5000)
+  },
+
   beforeMount() {
     const token = localStorage.getItem("token");
     const decoded = jwt_decode(token);
@@ -98,8 +112,52 @@ export default {
         console.warn("Error", error);
       });
   },
+
+  methods: {
+    // showDynamicRuntimeModal() {
+    //   this.$modal.show(
+    //     {
+    //       template: `
+    //           <div class="example-modal-content">
+    //             <p>Component has been created inline.</p>
+    //             <p>{{ text }}</p>
+    //             <p>This component is draggable because of the "dynamicDefault" property.</p>
+    //           </div>
+    //         `,
+    //       props: ['text']
+    //     },
+    //     {
+    //       text: 'Text has been passed as a property.'
+    //     },
+    //     {
+    //       height: 'auto'
+    //     }
+    //   )
+    // },
+
+
+  showDynamicComponentModal(data) { console.log('Dados do modal', data)
+      this.$modal.show(ModalCustom, {
+        text: "TU E DEMAIS",
+        name: "tiago",
+        tagline: "nayany",
+        description: "jjjj",
+         imagem:"dddd", 
+         volume:"fjfjf", 
+         ingredients:"sfkopskf", 
+         food_pairing: "admakdokad",
+
+      })
+    },
+  }
+
+
+  
 };
+
+
 </script>
+
 
 <style scoped>
 /* .produtos {
@@ -108,14 +166,13 @@ export default {
   align-items: center;
 } */
 
-.btn-descricao{
+.btn-descricao {
   display: flex;
   justify-content: center;
   width: 100%;
-
 }
 
-#descricao {
+.descricao {
   color: white;
   background-color: #005eff;
   border: none;
@@ -123,13 +180,10 @@ export default {
   margin: 6px;
   border-radius: 4px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
-  
-
 }
 
 .produto-propriedades {
   width: 80%;
-  
 }
 .propriedade {
   display: flex;
@@ -139,8 +193,6 @@ export default {
 .produto-propriedades-main {
   display: flex;
   justify-content: center;
-  
-  
 }
 
 #beer-name {
