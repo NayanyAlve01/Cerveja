@@ -26,25 +26,38 @@
           <p id="beer-name">
             {{ produto.name }}
           </p>
-          <hr>
-          <!-- <p>
+          <hr />
+          <div class="produto-propriedades-main">
+            <div class="produto-propriedades">
+              <!-- <p>
           <img :src="produto.image_url" alt="produto.name" />
           </p> -->
-          <p id="fb">
-           Fabricado em:  {{ produto.first_brewed }}
-          </p>
-          <p id="abv">
-           ABV: {{ produto.abv }}
-          </p>
-          <p id="ibu">
-           IBU: {{ produto.ibu }}
-          </p>
-          <p id="ph">
-            PH: {{ produto.ph }}
-          </p>
-          <p id="al">
-            Attenuation Level: {{ produto.attenuation_level }}
-          </p>
+              <div class="propriedade" id="fb">
+                <div>Fabricado em:</div>
+                <div>{{ produto.first_brewed }}</div>
+              </div>
+              <div class="propriedade" id="abv">
+                <div>ABV:</div>
+                <div>{{ produto.abv }}</div>
+              </div>
+              <div class="propriedade" id="ibu">
+                <div>IBU:</div>
+                <div>{{ produto.ibu }}</div>
+              </div>
+              <div class="propriedade" id="ph">
+                <div>PH:</div>
+                <div>{{ produto.ph }}</div>
+              </div>
+              <div class="propriedade" id="al">
+                <div>Attenuation Level:</div>
+                <div>{{ produto.attenuation_level }}</div>
+              </div>
+              <hr />
+            </div>
+          </div>
+            <div class="btn-descricao">
+              <button id="descricao">Descrição</button>
+            </div>
         </div>
       </div>
     </section>
@@ -94,18 +107,49 @@ export default {
   flex-direction: column;
   align-items: center;
 } */
-#fb{
+
+.btn-descricao{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+}
+
+#descricao {
+  color: white;
+  background-color: #005eff;
+  border: none;
+  padding: 6px 7px;
+  margin: 6px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  
+
+}
+
+.produto-propriedades {
+  width: 80%;
+  
+}
+.propriedade {
+  display: flex;
+  justify-content: space-between;
+}
+
+.produto-propriedades-main {
+  display: flex;
+  justify-content: center;
+  
   
 }
 
-#beer-name{
+#beer-name {
   font-weight: bold;
+  text-align: center;
 }
 
-.produtos{
-display: flex;
-
-
+.produtos {
+  display: flex;
 }
 .produto {
   display: flex;
@@ -116,15 +160,11 @@ display: flex;
   background: white;
   border-radius: 4px;
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
-  
-  
 }
 
 .produto-container {
-  
   margin: 10px 0;
   width: 82%;
-
 }
 .produto img {
   width: 30%;
