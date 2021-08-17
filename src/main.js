@@ -9,8 +9,11 @@ Vue.config.productionTip = false
 Vue.use(VueJsModal, {
   dialog: true,
   dynamicDefaults: {
-    draggable: true
-  }
+    draggable: true,
+    resizable: true
+  },
+  height: 600,
+  width:  800
 });
 new Vue({
   router,

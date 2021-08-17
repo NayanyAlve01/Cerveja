@@ -14,7 +14,9 @@
       <button id="btnBusca">Buscar</button>
     </section>
 
-    <modal />
+    <modal :min-height=600 />
+
+    <!-- <modal-custom-dois/> -->
     <h1>Produtos</h1>
 
     <div class="bg"></div>
@@ -58,7 +60,7 @@
             </div>
           </div>
           <div class="btn-descricao">
-            <!-- <button class="descricao" @click="$modal.show('example-adaptive')">Descrição</button> -->
+            <!-- <button class="descricao" @click="testemodal(produto.id)">Descrição</button> -->
             <button
               class="descricao"
               @click="showDynamicComponentModal(produto.id)"
@@ -78,10 +80,13 @@ import jwt_decode from "jwt-decode";
 import Modal from "../components/Modal";
 import ModalCustom from "../components/ModalCustom";
 
+
 export default {
   name: "Produtos",
   components: {
     Modal,
+    
+
   },
   data() {
     return {
@@ -120,34 +125,13 @@ export default {
   },
 
   methods: {
-    // showDynamicRuntimeModal() {
-    //   this.$modal.show(
-    //     {
-    //       template: `
-    //           <div class="example-modal-content">
-    //             <p>Component has been created inline.</p>
-    //             <p>{{ text }}</p>
-    //             <p>This component is draggable because of the "dynamicDefault" property.</p>
-    //           </div>
-    //         `,
-    //       props: ['text']
-    //     },
-    //     {
-    //       text: 'Text has been passed as a property.'
-    //     },
-    //     {
-    //       height: 'auto'
-    //     }
-    //   )
-    // },
-
     showDynamicComponentModal(id) {
       const endpoind = "/api/v1/beers/" + id;
 
       api
         .get(endpoind, { headers: this.headers })
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           const produto = response.data[0];
           this.$modal.show(ModalCustom, {
             name: produto.name,
@@ -157,30 +141,14 @@ export default {
             volume: produto.volume,
             ingredients: produto.ingredients,
             food_pairing: produto.food_pairing,
-          },
-          
-          );
-
-          
+          });
         })
         .catch((error) => {
           console.warn("Error", error);
         });
-
-      // console.log('Dados do modal'+ id)
-      //   this.$modal.show(ModalCustom, {
-      //     text: "TU E DEMAIS",
-      //     name: "tiago",
-      //     tagline: "nayany",
-      //     description: "jjjj",
-      //      imagem:"dddd",
-      //      volume:"fjfjf",
-      //      ingredients:"sfkopskf",
-      //      food_pairing: "admakdokad",
-
-      //   })
     },
-  },
+  
+  }
 };
 </script>
 
@@ -277,15 +245,13 @@ export default {
   margin-top: -22px;
 }
 
-
-.modal-content{
-  border: 1px  solid green;
+.modal-content {
+  border: 1px solid green;
   height: 100%;
-    width: 100%;
-/*
+  width: 100%;
+  /*
     display: flex;
     justify-content: center;
     align-items: center; */
 }
-
 </style> 

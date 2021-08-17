@@ -5,14 +5,14 @@
     </div>
     <div class="descriptions">
       <div class="information">
-        <p>tagline: {{ tagline }}</p>
-        <p>Descrição: {{ description }}</p>
-        <p>Volume: {{ volume }}</p>
-        <p>ingredientes: {{ ingredients }}</p>
-        <p>Food Pairing: {{ food_pairing }}</p>
+        <p> <strong>Tagline: </strong> {{ tagline }}</p>
+        <p><strong>Descrição:</strong> {{ description }}</p>
+        <p><strong>Volume:</strong> {{ volume }}</p>
+        <p><strong>Ingredientes: </strong>{{ ingredients }}</p>
+        <p><strong>Food Pairing: </strong>{{ food_pairing }}</p>
       </div>
       <div class="description-img">
-        <p>Imagem: {{ image_url }}</p>
+         <img :src="image_url" width="100%">
       </div>
     </div>
   </div>
@@ -32,12 +32,30 @@ export default {
 };
 </script>
 <style scoped>
-.modal-content {
-  border: 1px solid red;
 
-  /* display: flex;
-    justify-content: center;
-    align-items: center; */
+.description-img{
+  
+  max-width: 60%;
+  display: flex;
+  align-items: center;
+}
+
+.descriptions{
+  
+  display: flex;
+
+}
+
+.title{
+  
+  display: flex;
+  justify-content: center;
+
+}
+.information{
+ 
+  font-size: 10.5px;
+  min-width: 50%;
 }
 </style>
 
