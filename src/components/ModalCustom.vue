@@ -1,18 +1,18 @@
 <template>
   <div class="modal-content">
     <div class="title">
-      <h2> {{ name }}</h2>
+      <h2>{{ name }}</h2>
     </div>
     <div class="descriptions">
       <div class="information">
-        <p> <strong>Tagline: </strong> {{ tagline }}</p>
+        <p><strong>Tagline: </strong> {{ tagline }}</p>
         <p><strong>Descrição:</strong> {{ description }}</p>
         <p><strong>Volume:</strong> {{ volume }}</p>
         <p><strong>Ingredientes: </strong>{{ ingredients }}</p>
         <p><strong>Food Pairing: </strong>{{ food_pairing }}</p>
       </div>
       <div class="description-img">
-         <img :src="image_url" width="100%">
+        <img :src="image_url" width="100%" />
       </div>
     </div>
   </div>
@@ -32,28 +32,21 @@ export default {
 };
 </script>
 <style scoped>
-
-.description-img{
-  
+.description-img {
   max-width: 60%;
   display: flex;
   align-items: center;
 }
 
-.descriptions{
-  
+.descriptions {
   display: flex;
-
 }
 
-.title{
-  
+.title {
   display: flex;
   justify-content: center;
-
 }
-.information{
- 
+.information {
   font-size: 10.5px;
   min-width: 50%;
 }

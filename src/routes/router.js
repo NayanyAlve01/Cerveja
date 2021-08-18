@@ -8,19 +8,19 @@ import Produtos from '@/pages/Produtos';
 
 
 const routes = [
-{
-    path:'/',
-    component:Login
-},
-{
-    path:'/produtos',
-    component:Produtos
-}
+    {
+        path: '/',
+        component: Login
+    },
+    {
+        path: '/produtos',
+        component: Produtos
+    }
 
 ];
 
-const router = new VueRouter ({
-routes, 
-mode:'history'
+const router = new VueRouter({
+    routes,
+    mode: 'history'
 });
-export  default router; 
+export default router;

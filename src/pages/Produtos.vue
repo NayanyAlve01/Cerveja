@@ -3,7 +3,6 @@
     <section class="usurario">
       {{ usurario }}
     </section>
-
     <section class="divBusca">
       <input
         type="text"
@@ -14,33 +13,21 @@
       <button id="btnBusca" @click="getBeerName">Buscar</button>
       <button class="btn-random" @click="getRandomBeer">Random</button>
     </section>
-
     <modal :min-height="600" />
-
-    <!-- <modal-custom-dois/> -->
-    <h1>Produtos</h1>
-
     <div class="bg"></div>
-            <input type="radio" @click="teor" name="teor"
-            value="menor"> 0% - 10% |
-            <input type="radio" @click="teor" name="teor" value="maior"> 10% - 55%
+    <div class="radio">
+      <input type="radio" @click="teor" name="teor" value="menor" /> 0% - 10% |
+      <input type="radio" @click="teor" name="teor" value="maior" /> 10% - 55%
+    </div>
     <section class="produtos">
-    <!-- <div class="produto"> -->
-      <div v-for="(produto, index) in produtos" class="produto"  :key="index">
+      <div v-for="(produto, index) in produtos" class="produto" :key="index">
         <div class="produto-container">
-          <!-- <a class="produto" :href="produto.beers" target="_blank">
-            <img :src="produto.thumb" alt="produto.title" />
-          </a>
-          <div class="produto-link">{{ produto.beers }}</div> -->
           <p id="beer-name">
             {{ produto.name }}
           </p>
           <hr />
           <div class="produto-propriedades-main">
             <div class="produto-propriedades">
-              <!-- <p>
-          <img :src="produto.image_url" alt="produto.name" />
-          </p> -->
               <div class="propriedade" id="fb">
                 <div>Fabricado em:</div>
                 <div>{{ produto.first_brewed }}</div>
@@ -65,7 +52,6 @@
             </div>
           </div>
           <div class="btn-descricao">
-          
             <button
               class="descricao"
               @click="showDynamicComponentModal(produto.id)"
@@ -75,25 +61,19 @@
           </div>
         </div>
       </div>
-      
     </section>
-<!-- ----------------------------- -->
-
   </main>
 </template>
 
 <script>
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
-
+import Pagination from "../components/Pagination";
 import ModalCustom from "../components/ModalCustom";
-
 
 export default {
   name: "Produtos",
-  components: {
-    
-  },
+  components: {},
   data() {
     return {
       produtos: [],
@@ -101,8 +81,8 @@ export default {
       usurario: "",
       showModal: false,
       headers: {},
-      page: 1
-      // beerName: "",
+      page: 1,
+      Pagination,
     };
   },
   created() {
@@ -139,7 +119,6 @@ export default {
       api
         .get(endpoind, { headers: this.headers })
         .then((response) => {
-          console.log(response.data);
           const produto = response.data[0];
           this.$modal.show(ModalCustom, {
             name: produto.name,
@@ -161,46 +140,30 @@ export default {
         this.showDynamicComponentModal(response.data[0].id);
       });
     },
-    getBeerName(){
+    getBeerName() {
       const name = this.pesquisa;
-       const endpoind = `/api/v1/beers?beer_name=${name}` ;
+      const endpoind = `/api/v1/beers?beer_name=${name}`;
       api.get(endpoind, { headers: this.headers }).then((response) => {
-        this.$nextTick(function (){
+        this.$nextTick(function () {
           this.produtos = response.data;
-           })
         });
+      });
     },
-    teor(valor){
-      const teorBusca = (valor.target.value === "menor") ? "lt" : "gt"  
-       const endpoind = `/api/v1/beers?abv_${teorBusca}=10`;
+    teor(valor) {
+      const teorBusca = valor.target.value === "menor" ? "lt" : "gt";
+      const endpoind = `/api/v1/beers?abv_${teorBusca}=10`;
       api.get(endpoind, { headers: this.headers }).then((response) => {
-        this.$nextTick(function (){
+        this.$nextTick(function () {
           this.produtos = response.data;
-           })
-          // console.log(response.data)
         });
-      // console.log(valor)
-
-    }
-    // callback(page){
-    //    this.$nextTick(function (){
-    //      this.page++
-    //   console.log("testando")
-    //   console.log(page)
-    // }
-    //    )}
+      });
+    },
   },
 };
 </script>
 
 
 <style scoped>
-/* .produtos {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
-
 .btn-descricao {
   display: flex;
   justify-content: center;
@@ -287,12 +250,12 @@ export default {
 }
 
 .modal-content {
-  border: 1px solid green;
   height: 100%;
   width: 100%;
-  /*
-    display: flex;
-    justify-content: center;
-    align-items: center; */
+}
+
+.radio {
+  margin: 55px;
+  display: table-column-group;
 }
 </style> 

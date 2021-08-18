@@ -4,7 +4,9 @@ import router from './routes/router.js';
 import VueJsModal from 'vue-js-modal'
 
 // -------------------
-
+//make jw pagination component available in application
+import JwPagination from 'jw-vue-pagination';
+Vue.component('jw-pagination', JwPagination);
 
 new Vue({
   el: "#app",

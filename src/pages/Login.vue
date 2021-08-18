@@ -1,35 +1,41 @@
 <template>
   <main>
-
     <div class="limiter">
       <div class="container-login100" style="background-image">
-    <div class="Login" id="login">
-     <span class="login100-form-title p-b-49">
-						Login
-					</span>
-      
-    <p>
-      <span class="label-input100">Username</span>
-      <br/>
-      <input type="input100" placeholder="Username" v-model="form.username" /> 
-  
-      <br/>
-      <span class="label-input100">Password</span>
-      <br/>
-      <input type="password" placeholder="password" v-model="form.password" />
-      
-      <br/> 
-      
-      <div class="btn-login">
-        <button class="button button4" @click="login">Entrar</button>
+        <div class="Login" id="login">
+          <span class="login100-form-title p-b-49"> Login </span>
+
+          <p>
+            <span class="label-input100">Username</span>
+            <br />
+            <input
+              type="input100"
+              placeholder="Username"
+              v-model="form.username"
+            />
+
+            <br />
+            <span class="label-input100">Password</span>
+            <br />
+            <input
+              type="password"
+              placeholder="password"
+              v-model="form.password"
+            />
+
+            <br />
+          </p>
+
+          <div class="btn-login">
+            <button class="button button4" @click="login">Entrar</button>
+          </div>
+        </div>
       </div>
-      </div>
-      </div>
-  </div>
+    </div>
   </main>
 </template>
 <script>
-import api from '@/services/api'
+import api from "@/services/api";
 export default {
   name: "Login",
   data: () => ({
@@ -38,29 +44,29 @@ export default {
       password: "",
     },
   }),
-  created(){
-  },
+  created() {},
   methods: {
-    submit (){
-      console.log(this.from)
+    submit() {
+      console.log(this.from);
     },
-    login: function () { api
-      .post("/api/v1/auth/login", {
-        username: this.form.username,
-        password: this.form.password,
-      })
-      .then((response) => {
-       // console.log("resposta", response.data.data.access_token);
-        localStorage.setItem('token', response.data.data.access_token);
-         this.$router.replace("produtos");
-      }).catch((error) => {
-        alert('Login ou password inválidos!');
-        console.log(error);
-      }); 
-   }
-  }
+    login: function () {
+      api
+        .post("/api/v1/auth/login", {
+          username: this.form.username,
+          password: this.form.password,
+        })
+        .then((response) => {
+          // console.log("resposta", response.data.data.access_token);
+          localStorage.setItem("token", response.data.data.access_token);
+          this.$router.replace("produtos");
+        })
+        .catch((error) => {
+          alert("Login ou password inválidos!");
+          console.log(error);
+        });
+    },
+  },
 };
-
 </script>
 
 <style scoped>
@@ -70,8 +76,8 @@ main {
   align-items: center;
 }
 
-.button  {
-  background-color: #2B3D50;
+.button {
+  background-color: #2b3d50;
   border: none;
   color: white;
   padding: 10px;
@@ -81,20 +87,19 @@ main {
   font-size: 14px;
   margin: 10px 60px;
   cursor: pointer;
-  border-radius: 10px
+  border-radius: 10px;
 }
-
 
 /* --------------------------------------------- */
 
-/* [ login ]*/ 
+/* [ login ]*/
 .limiter {
   width: 100%;
   margin: 0 auto;
 }
 
 .container-login100 {
-  width: 100%;  
+  width: 100%;
   min-height: 100vh;
   display: -webkit-box;
   display: -webkit-flex;
@@ -117,7 +122,6 @@ main {
   overflow: hidden;
 }
 
-
 /*------------------------------------------------------------------
 [ Form ]*/
 
@@ -133,10 +137,5 @@ main {
   line-height: 1.2;
   text-align: center;
 }
-
-
-
-
-
 </style>
  
