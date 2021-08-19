@@ -13,11 +13,11 @@
       <button id="btnBusca" @click="getBeerName">Buscar</button>
       <button class="btn-random" @click="getRandomBeer">Random</button>
     </section>
-    <modal :min-height="600" />
+    <modal min-height="600" name="" />
     <div class="bg"></div>
     <div class="radio">
-      <input type="radio" @click="teor" name="teor" value="menor" /> 0% - 10% |
-      <input type="radio" @click="teor" name="teor" value="maior" /> 10% - 55%
+      <input type="radio" @click="teor" name="teor" value="lt" /> 0% - 10% |
+      <input type="radio" @click="teor" name="teor" value="gt" /> 10% - 55%
     </div>
     <section class="produtos">
       <div v-for="(produto, index) in produtos" class="produto" :key="index">
@@ -150,7 +150,7 @@ export default {
       });
     },
     teor(valor) {
-      const teorBusca = valor.target.value === "menor" ? "lt" : "gt";
+      const teorBusca = valor.target.value;
       const endpoind = `/api/v1/beers?abv_${teorBusca}=10`;
       api.get(endpoind, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {

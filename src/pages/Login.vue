@@ -49,7 +49,7 @@ export default {
     submit() {
       console.log(this.from);
     },
-    login: function () {
+    login () {
       api
         .post("/api/v1/auth/login", {
           username: this.form.username,
