@@ -1,31 +1,20 @@
 <template>
   <header>
     <nav class="container">
-      <ul>
+      <!-- <ul>
         <li><a href="/">Login</a></li>
-
-        <li><a href="/produtos">Beers</a></li>
-      </ul>
+      </ul> -->
     </nav>
   </header>
 </template>
 
 <script>
+
 export default {
   nome: "Header",
-  data() {
-    return {
-      menuActive: false,
-    };
-  },
-  methods: {
-    openMenu: function () {
-      this.menuActive = true;
-    },
-    closeMenu: function () {
-      this.menuActive = true;
-    },
-  },
+
+ 
+  
 };
 </script>
 

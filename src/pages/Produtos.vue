@@ -1,5 +1,11 @@
 <template>
   <main>
+    <div>
+      <b-table striped hover items="items"></b-table>
+    </div>
+    <ul>
+      <li @click="logout"><a href="/">Sair</a></li>
+    </ul>
     <section class="usurario">
       {{ usurario }}
     </section>
@@ -82,6 +88,7 @@ export default {
       showModal: false,
       headers: {},
       page: 1,
+      decoded: {},
       Pagination,
     };
   },
@@ -93,9 +100,9 @@ export default {
 
   beforeMount() {
     const token = localStorage.getItem("token");
-    const decoded = jwt_decode(token);
-
-    this.usurario = decoded.user.name;
+    // let decoded = jwt_decode(token);
+    this.decoded = jwt_decode(token);
+    this.usurario = this.decoded.user.name;
 
     const authorization = "Bearer " + token;
     this.headers = {
@@ -157,6 +164,12 @@ export default {
           this.produtos = response.data;
         });
       });
+    },
+    logout() {
+      this.decoded = {};
+      localStorage.clear();
+
+      // console.log("Sair", this.decoded.user);
     },
   },
 };
