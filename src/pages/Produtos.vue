@@ -100,23 +100,28 @@ export default {
 
   beforeMount() {
     const token = localStorage.getItem("token");
-    // let decoded = jwt_decode(token);
-    this.decoded = jwt_decode(token);
-    this.usurario = this.decoded.user.name;
 
-    const authorization = "Bearer " + token;
-    this.headers = {
-      authorization: authorization,
-    };
+    if (!token){
+      document.location.pathname = "/";
+    } else {
+      this.decoded = jwt_decode(token);
+      this.usurario = this.decoded.user.name;
+  
+      const authorization = "Bearer " + token;
+      this.headers = {
+        authorization: authorization,
+      };
+  
+      api
+        .get("/api/v1/beers", { headers: this.headers })
+        .then((response) => {
+          this.produtos = response.data;
+        })
+        .catch((error) => {
+          console.warn("Error", error);
+        });
 
-    api
-      .get("/api/v1/beers", { headers: this.headers })
-      .then((response) => {
-        this.produtos = response.data;
-      })
-      .catch((error) => {
-        console.warn("Error", error);
-      });
+    }
   },
 
   methods: {
@@ -166,10 +171,7 @@ export default {
       });
     },
     logout() {
-      this.decoded = {};
       localStorage.clear();
-
-      // console.log("Sair", this.decoded.user);
     },
   },
 };
