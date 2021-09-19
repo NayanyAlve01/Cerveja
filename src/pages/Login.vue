@@ -77,7 +77,7 @@ main {
 }
 
 .button {
-  background-color: #2b3d50;
+  background-color: #FFA07A;
   border: none;
   color: white;
   padding: 10px;

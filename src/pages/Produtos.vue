@@ -3,12 +3,12 @@
     <div>
       <b-table striped hover items="items"></b-table>
     </div>
-    <ul>
+    <div class="sair">
       <li @click="logout"><a href="/">Sair</a></li>
-    </ul>
-    <section class="usurario">
-      {{ usurario }}
+    <section class="usuario">
+      {{ usuario }}
     </section>
+    </div>
     <section class="divBusca">
       <input
         type="text"
@@ -21,9 +21,9 @@
     </section>
     <modal min-height="600" name="" />
     <div class="bg"></div>
-    <div class="radio">
-      <input type="radio" @click="teor" name="teor" value="lt" /> 0% - 10% |
-      <input type="radio" @click="teor" name="teor" value="gt" /> 10% - 55%
+    <div class="button">
+      <input type="button" @click="teor" name="teor" value="0% - 10%" /> 
+      <input type="button" @click="teor" name="teor" value="10% - 55%" /> 
     </div>
     <section class="produtos">
       <div v-for="(produto, index) in produtos" class="produto" :key="index">
@@ -84,7 +84,7 @@ export default {
     return {
       produtos: [],
       pesquisa: "",
-      usurario: "",
+      usuario: "",
       showModal: false,
       headers: {},
       page: 1,
@@ -105,7 +105,7 @@ export default {
       document.location.pathname = "/";
     } else {
       this.decoded = jwt_decode(token);
-      this.usurario = this.decoded.user.name;
+      this.usuario = this.decoded.user.name;
   
       const authorization = "Bearer " + token;
       this.headers = {
@@ -162,7 +162,12 @@ export default {
       });
     },
     teor(valor) {
-      const teorBusca = valor.target.value;
+      let teorBusca = "lt";
+
+      if (valor.target.value[0] === "1"){
+        teorBusca = "gt";
+      }
+
       const endpoind = `/api/v1/beers?abv_${teorBusca}=10`;
       api.get(endpoind, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {
@@ -187,7 +192,7 @@ export default {
 
 .descricao {
   color: white;
-  background-color: #005eff;
+  background-color:#8B8989;
   border: none;
   padding: 6px 7px;
   margin: 6px;
@@ -207,6 +212,27 @@ export default {
   display: flex;
   justify-content: center;
 }
+
+/* ---- */
+  .usuario {
+    color: black;
+    width: 100px;
+    height: 10px;
+    margin-left: 5px;
+    margin-top: 10px;
+    /* margin-top: -10px; */
+  }
+.sair{
+ color: white;
+  width: 80%;
+  height: 35px;
+  margin-right: 100;
+  margin-left: 20px;
+  margin-top: -20px;
+}
+
+/* .... */
+
 
 #beer-name {
   font-weight: bold;
@@ -255,21 +281,13 @@ export default {
   margin-top: -15px;
 }
 
-.usurario {
-  color: white;
-  width: 100%;
-  flex-direction: row;
-  height: 50px;
-  margin-left: 20px;
-  margin-top: -22px;
-}
 
 .modal-content {
   height: 100%;
   width: 100%;
 }
 
-.radio {
+.submit {
   margin: 55px;
   display: table-column-group;
 }
