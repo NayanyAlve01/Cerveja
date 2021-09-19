@@ -136,7 +136,7 @@ export default {
             name: produto.name,
             tagline: produto.tagline,
             description: produto.description,
-            image_url: produto.image_url,
+            image_url: (!produto.image_url) ? require("../assets/images/img.png") : produto.image_url,
             volume: produto.volume,
             ingredients: produto.ingredients,
             food_pairing: produto.food_pairing,
