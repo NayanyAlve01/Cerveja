@@ -7,8 +7,9 @@
       <div class="information">
         <p><strong>Tagline: </strong> {{ tagline }}</p>
         <p><strong>Descrição:</strong> {{ description }}</p>
-        <p><strong>Volume:</strong> {{ volume }}</p>
-        <p><strong>Ingredientes: </strong>{{ ingredients }}</p>
+        <p><strong>Volume:</strong> {{ volume.value + " " + volume.unit }}</p>
+        <strong >Ingredientes: </strong>  
+        <div v-for="(ingredient, index) in ingredients" :key="index"> {{ ingredient }}</div>
         <p><strong>Food Pairing: </strong>{{ food_pairing }}</p>
       </div>
       <div class="description-img">

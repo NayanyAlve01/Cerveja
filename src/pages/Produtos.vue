@@ -5,9 +5,9 @@
     </div>
     <div class="sair">
       <li @click="logout"><a href="/">Sair</a></li>
-    <section class="usuario">
-      {{ usuario }}
-    </section>
+      <section class="usuario">
+        {{ usuario }}
+      </section>
     </div>
     <section class="divBusca">
       <input
@@ -22,8 +22,8 @@
     <modal min-height="600" name="" />
     <div class="bg"></div>
     <div class="button">
-      <input type="button" @click="teor" name="teor" value="0% - 10%" /> 
-      <input type="button" @click="teor" name="teor" value="10% - 55%" /> 
+      <input type="button" @click="teor" name="teor" value="0% - 10%" />
+      <input type="button" @click="teor" name="teor" value="10% - 55%" />
     </div>
     <section class="produtos">
       <div v-for="(produto, index) in produtos" class="produto" :key="index">
@@ -101,17 +101,17 @@ export default {
   beforeMount() {
     const token = localStorage.getItem("token");
 
-    if (!token){
+    if (!token) {
       document.location.pathname = "/";
     } else {
       this.decoded = jwt_decode(token);
       this.usuario = this.decoded.user.name;
-  
+
       const authorization = "Bearer " + token;
       this.headers = {
         authorization: authorization,
       };
-  
+
       api
         .get("/api/v1/beers", { headers: this.headers })
         .then((response) => {
@@ -120,28 +120,46 @@ export default {
         .catch((error) => {
           console.warn("Error", error);
         });
-
     }
   },
 
   methods: {
     showDynamicComponentModal(id) {
       const endpoind = "/api/v1/beers/" + id;
+      let stringIngredient = [];
 
       api
         .get(endpoind, { headers: this.headers })
         .then((response) => {
           const produto = response.data[0];
+          for (const ingredient in produto.ingredients) {
+            if (typeof produto.ingredients[ingredient] === "string") {
+              stringIngredient.push(
+                `${ingredient.toUpperCase()}: ${produto.ingredients[ingredient]}`
+              );
+            } else {
+              const desc = produto.ingredients[ingredient].map((value)=> {
+                return `${value.name} - ${value.amount.value} ${value.amount.unit}`
+              }) 
+              stringIngredient.push(
+                `${ingredient.toUpperCase()}: ${desc}`
+              );
+            }
+          }
+
           this.$modal.show(ModalCustom, {
             name: produto.name,
             tagline: produto.tagline,
             description: produto.description,
-            image_url: (!produto.image_url) ? require("../assets/images/img.png") : produto.image_url,
+            image_url: !produto.image_url
+              ? require("../assets/images/img.png")
+              : produto.image_url,
             volume: produto.volume,
-            ingredients: produto.ingredients,
-            food_pairing: produto.food_pairing,
+            ingredients: stringIngredient,
+            food_pairing: produto.food_pairing.join(),
           });
         })
+
         .catch((error) => {
           console.warn("Error", error);
         });
@@ -164,7 +182,7 @@ export default {
     teor(valor) {
       let teorBusca = "lt";
 
-      if (valor.target.value[0] === "1"){
+      if (valor.target.value[0] === "1") {
         teorBusca = "gt";
       }
 
@@ -192,7 +210,7 @@ export default {
 
 .descricao {
   color: white;
-  background-color:#8B8989;
+  background-color: #8b8989;
   border: none;
   padding: 6px 7px;
   margin: 6px;
@@ -214,16 +232,16 @@ export default {
 }
 
 /* ---- */
-  .usuario {
-    color: black;
-    width: 100px;
-    height: 10px;
-    margin-left: 5px;
-    margin-top: 10px;
-    /* margin-top: -10px; */
-  }
-.sair{
- color: white;
+.usuario {
+  color: black;
+  width: 100px;
+  height: 10px;
+  margin-left: 5px;
+  margin-top: 10px;
+  /* margin-top: -10px; */
+}
+.sair {
+  color: white;
   width: 80%;
   height: 35px;
   margin-right: 100;
@@ -232,7 +250,6 @@ export default {
 }
 
 /* .... */
-
 
 #beer-name {
   font-weight: bold;
@@ -280,7 +297,6 @@ export default {
   font-size: 14px;
   margin-top: -15px;
 }
-
 
 .modal-content {
   height: 100%;
