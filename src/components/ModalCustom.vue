@@ -13,7 +13,7 @@
         <p><strong>Food Pairing: </strong>{{ food_pairing }}</p>
       </div>
       <div class="description-img">
-        <img :src="image_url" width="100%" />
+        <img :src="image_url" width="50%" />
       </div>
     </div>
   </div>

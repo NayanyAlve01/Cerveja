@@ -34,7 +34,9 @@
     </div>
   </main>
 </template>
-<script>
+ 
+ <script>
+
 import api from "@/services/api";
 export default {
   name: "Login",
@@ -47,7 +49,7 @@ export default {
   created() {},
   methods: {
     submit() {
-      console.log(this.from);
+      console.log(this.from); 
     },
     login () {
       api
@@ -56,7 +58,6 @@ export default {
           password: this.form.password,
         })
         .then((response) => {
-          // console.log("resposta", response.data.data.access_token);
           localStorage.setItem("token", response.data.data.access_token);
           this.$router.replace("produtos");
         })
@@ -68,7 +69,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 main {
   background-color: var(--color-background);
@@ -77,7 +77,7 @@ main {
 }
 
 .button {
-  background-color: #FFA07A;
+  background-color:#8b8989 ;
   border: none;
   color: white;
   padding: 10px;
@@ -133,7 +133,7 @@ main {
   display: block;
   font-family: Poppins-Bold;
   font-size: 39px;
-  color: #070707;
+  color:  #8b8989;
   line-height: 1.2;
   text-align: center;
 }

@@ -1,15 +1,12 @@
 <template>
   <main>
-    <div>
-      <b-table striped hover items="items"></b-table>
-    </div>
     <div class="sair">
-      <li @click="logout"><a href="/">Sair</a></li>
-      <section class="usuario">
-        {{ usuario }}
-      </section>
+      <li > <router-link :to="{name: 'Entrada' }"> <b-button @click="logout"> Sair</b-button></router-link></li>
     </div>
-    <section class="divBusca">
+    <div class="usuario">
+      {{ usuario }}
+    </div>
+    <div class="Busca">
       <input
         type="text"
         v-model="pesquisa"
@@ -18,14 +15,18 @@
       />
       <button id="btnBusca" @click="getBeerName">Buscar</button>
       <button class="btn-random" @click="getRandomBeer">Random</button>
-    </section>
+    </div>
     <modal min-height="600" name="" />
     <div class="bg"></div>
     <div class="button">
       <input type="button" @click="teor" name="teor" value="0% - 10%" />
       <input type="button" @click="teor" name="teor" value="10% - 55%" />
     </div>
-    <section class="produtos">
+    
+   <div>
+    <b-table striped hover :items="items" :fields="fields"></b-table>
+  </div>
+    <div class="produtos">
       <div v-for="(produto, index) in produtos" class="produto" :key="index">
         <div class="produto-container">
           <p id="beer-name">
@@ -67,7 +68,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 </template>
 
@@ -82,6 +83,11 @@ export default {
   components: {},
   data() {
     return {
+    //   fields:['Fabricado:', 'ABV:','IBU:','PH:', 'Attenuation Level:' ],
+    //   items: [
+    //     {
+    //       isActive: true, Level , PH, IBU, ABV, fabricado},
+    //   ],
       produtos: [],
       pesquisa: "",
       usuario: "",
@@ -135,15 +141,15 @@ export default {
           for (const ingredient in produto.ingredients) {
             if (typeof produto.ingredients[ingredient] === "string") {
               stringIngredient.push(
-                `${ingredient.toUpperCase()}: ${produto.ingredients[ingredient]}`
+                `${ingredient.toUpperCase()}: ${
+                  produto.ingredients[ingredient]
+                }`
               );
             } else {
-              const desc = produto.ingredients[ingredient].map((value)=> {
-                return `${value.name} - ${value.amount.value} ${value.amount.unit}`
-              }) 
-              stringIngredient.push(
-                `${ingredient.toUpperCase()}: ${desc}`
-              );
+              const desc = produto.ingredients[ingredient].map((value) => {
+                return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
+              });
+              stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
             }
           }
 
@@ -232,13 +238,11 @@ export default {
 }
 
 /* ---- */
+
 .usuario {
-  color: black;
-  width: 100px;
-  height: 10px;
-  margin-left: 5px;
-  margin-top: 10px;
-  /* margin-top: -10px; */
+  color: whi;
+  margin-top: -33px;
+  margin-left: 1250px;
 }
 .sair {
   color: white;
@@ -248,7 +252,9 @@ export default {
   margin-left: 20px;
   margin-top: -20px;
 }
-
+.Busca {
+   margin-left: 1070px;
+}
 /* .... */
 
 #beer-name {
