@@ -3,7 +3,7 @@
     <div class="limiter">
       <div class="container-login100" style="background-image">
         <b-card>
-          <!-- <div class="Login" id="login"> -->
+          <div class="Login" id="login">
           <span class="login100-form-title p-b-49 mb-4"> LOGIN </span>
 
           <div class="mb-2">Username</div>
@@ -22,7 +22,7 @@
           <div class="mt-3">
             <b-button variant="primary" @click="login">Entrar</b-button>
           </div>
-          <!-- </div> -->
+          </div>
         </b-card>
       </div>
     </div>
