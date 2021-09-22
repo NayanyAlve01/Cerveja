@@ -2,41 +2,34 @@
   <main>
     <div class="limiter">
       <div class="container-login100" style="background-image">
-        <div class="Login" id="login">
-          <span class="login100-form-title p-b-49"> Login </span>
+        <b-card>
+          <!-- <div class="Login" id="login"> -->
+          <span class="login100-form-title p-b-49 mb-4"> LOGIN </span>
 
-          <p>
-            <span class="label-input100">Username</span>
-            <br />
-            <input
-              type="input100"
-              placeholder="Username"
-              v-model="form.username"
-            />
+          <div class="mb-2">Username</div>
+          <b-form-input
+            v-model="form.username"
+            placeholder="Username"
+          ></b-form-input>
 
-            <br />
-            <span class="label-input100">Password</span>
-            <br />
-            <input
-              type="password"
-              placeholder="password"
-              v-model="form.password"
-            />
+          <div class="mb-2 mt-2">Password</div>
+          <b-form-input
+            type="password"
+            v-model="form.password"
+            placeholder="Password"
+          ></b-form-input>
 
-            <br />
-          </p>
-
-          <div class="btn-login">
-            <button class="button button4" @click="login">Entrar</button>
+          <div class="mt-3">
+            <b-button variant="primary" @click="login">Entrar</b-button>
           </div>
-        </div>
+          <!-- </div> -->
+        </b-card>
       </div>
     </div>
   </main>
 </template>
  
- <script>
-
+<script>
 import api from "@/services/api";
 export default {
   name: "Login",
@@ -49,9 +42,9 @@ export default {
   created() {},
   methods: {
     submit() {
-      console.log(this.from); 
+      console.log(this.from);
     },
-    login () {
+    login() {
       api
         .post("/api/v1/auth/login", {
           username: this.form.username,
@@ -77,7 +70,7 @@ main {
 }
 
 .button {
-  background-color:#8b8989 ;
+  background-color: #8b8989;
   border: none;
   color: white;
   padding: 10px;
@@ -131,9 +124,10 @@ main {
 
 .login100-form-title {
   display: block;
-  font-family: Poppins-Bold;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: normal;
   font-size: 39px;
-  color:  #8b8989;
+  color: #8b8989;
   line-height: 1.2;
   text-align: center;
 }
