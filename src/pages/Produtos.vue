@@ -1,31 +1,34 @@
 <template>
   <main>
-    <div class="sair">
-      <li > <router-link :to="{name: 'Entrada' }"> <b-button @click="logout"> Sair</b-button></router-link></li>
-    </div>
+    
     <div class="usuario">
+      <router-link :to="{name: 'Entrada' }">  <b-button size="sm"  variant="outline-light" @click="login">Sair </b-button></router-link>
       {{ usuario }}
     </div>
+    
     <div class="Busca">
-      <input
+      <b-row><b-form-input
+            v-model="pesquisa"
+            id="txtBusca"
+          ></b-form-input>
+      <!-- <input
         type="text"
         v-model="pesquisa"
         id="txtBusca"
         placeholder="Buscar..."
-      />
-      <button id="btnBusca" @click="getBeerName">Buscar</button>
-      <button class="btn-random" @click="getRandomBeer">Random</button>
-    </div>
+      /> -->
+    <b-col lg="4" class="pb-2"><b-button variant="outline-primary" @click="getBeerName">Buscar</b-button> </b-col>
+    <b-col lg="4" class="pb-2"><b-button variant="outline-primary" @click="getRandomBeer">Random</b-button> </b-col>
+    </b-row></div>
     <modal min-height="600" name="" />
     <div class="bg"></div>
-    <div class="button">
-      <input type="button" @click="teor" name="teor" value="0% - 10%" />
-      <input type="button" @click="teor" name="teor" value="10% - 55%" />
-    </div>
     
-   <div>
-    <b-table striped hover :items="items" :fields="fields"></b-table>
+    <div class="button">
+  <b-col lg="4" class="pb-2"><b-button variant="outline-primary" @click="teor" name="teor"> 0%  - 10%</b-button> </b-col> 
+  <b-col lg="4" class="pb-2"><b-button variant="outline-primary" @click="teor" name="teor"> 10% - 55% </b-button></b-col>
   </div>
+    
+    
     <div class="produtos">
       <div v-for="(produto, index) in produtos" class="produto" :key="index">
         <div class="produto-container">
@@ -83,11 +86,6 @@ export default {
   components: {},
   data() {
     return {
-    //   fields:['Fabricado:', 'ABV:','IBU:','PH:', 'Attenuation Level:' ],
-    //   items: [
-    //     {
-    //       isActive: true, Level , PH, IBU, ABV, fabricado},
-    //   ],
       produtos: [],
       pesquisa: "",
       usuario: "",
@@ -238,22 +236,21 @@ export default {
 }
 
 /* ---- */
-
-.usuario {
-  color: whi;
-  margin-top: -33px;
-  margin-left: 1250px;
-}
-.sair {
-  color: white;
-  width: 80%;
+ .usuario {
+  color:black; 
+   width: 80%;
   height: 35px;
   margin-right: 100;
-  margin-left: 20px;
-  margin-top: -20px;
+  margin-left: 20px; 
+   margin-top: -30px; 
 }
 .Busca {
-   margin-left: 1070px;
+   width: 80%;
+  height: 35px;
+   margin-left: 1000px;
+   margin-right: 100;
+  
+
 }
 /* .... */
 
