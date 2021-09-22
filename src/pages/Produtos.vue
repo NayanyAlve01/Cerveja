@@ -1,34 +1,51 @@
 <template>
   <main>
-    
     <div class="usuario">
-      <router-link :to="{name: 'Entrada' }">  <b-button size="sm"  variant="outline-light" @click="login">Sair </b-button></router-link>
+      <router-link :to="{ name: 'Entrada' }">
+        <b-button size="sm" variant="outline-light" @click="login"
+          >Sair
+        </b-button></router-link
+      >
       {{ usuario }}
     </div>
-    
-    <div class="Busca">
-      <b-row><b-form-input
-            v-model="pesquisa"
-            id="txtBusca"
-          ></b-form-input>
-      <!-- <input
-        type="text"
-        v-model="pesquisa"
-        id="txtBusca"
-        placeholder="Buscar..."
-      /> -->
-    <b-col lg="4" class="pb-2"><b-button variant="outline-primary" @click="getBeerName">Buscar</b-button> </b-col>
-    <b-col lg="4" class="pb-2"><b-button variant="outline-primary" @click="getRandomBeer">Random</b-button> </b-col>
-    </b-row></div>
+
+    <b-row style="display: flex; justify-content: space-between">
+      <b-row class="ml-2">
+        <b-button
+          variant="outline-primary"
+          class="ml-4"
+          @click="teor"
+          name="teor"
+          value="0"
+        >
+          0% - 10%
+        </b-button>
+        <b-button
+          variant="outline-primary"
+          class="ml-2"
+          @click="teor"
+          name="teor"
+          value="1"
+          >10% - 55%
+        </b-button>
+      </b-row>
+      <div class="Busca">
+        <b-row>
+          <b-col>
+            <b-form-input v-model="pesquisa" id="txtBusca"></b-form-input>
+          </b-col>
+          <b-button variant="outline-primary" class="mr-1" @click="getBeerName"
+            >Buscar</b-button
+          >
+          <b-button variant="outline-primary" @click="getRandomBeer"
+            >Random</b-button
+          >
+        </b-row>
+      </div>
+    </b-row>
     <modal min-height="600" name="" />
     <div class="bg"></div>
-    
-    <div class="button">
-  <b-col lg="4" class="pb-2"><b-button variant="outline-primary" @click="teor" name="teor"> 0%  - 10%</b-button> </b-col> 
-  <b-col lg="4" class="pb-2"><b-button variant="outline-primary" @click="teor" name="teor"> 10% - 55% </b-button></b-col>
-  </div>
-    
-    
+
     <div class="produtos">
       <div v-for="(produto, index) in produtos" class="produto" :key="index">
         <div class="produto-container">
@@ -236,22 +253,18 @@ export default {
 }
 
 /* ---- */
- .usuario {
-  color:black; 
-   width: 80%;
+.usuario {
+  color: black;
+  width: 80%;
   height: 35px;
   margin-right: 100;
-  margin-left: 20px; 
-   margin-top: -30px; 
+  margin-left: 20px;
+  margin-top: -30px;
 }
 .Busca {
-   width: 80%;
-  height: 35px;
-   margin-left: 1000px;
-   margin-right: 100;
-  
-
-}
+  width: 60%;
+  margin-right: 40px;
+  }
 /* .... */
 
 #beer-name {
