@@ -2,7 +2,7 @@
   <main>
     <div class="usuario">
       <router-link :to="{ name: 'Entrada' }">
-        <b-button size="sm" variant="outline-light" @click="login"
+        <b-button size="sm" variant="outline-light" @click="logout"
           >Sair
         </b-button></router-link
       >
