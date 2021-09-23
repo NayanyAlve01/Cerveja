@@ -2,7 +2,7 @@
   <main>
     <div class="usuario">
       <router-link :to="{ name: 'Entrada' }">
-        <b-button size="sm" variant="outline-light" @click="login"
+        <b-button size="sm" variant="outline-light" @click="logout"
           >Sair
         </b-button></router-link
       >
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import firebase from 'firebase';
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
 import Pagination from "../components/Pagination";
@@ -145,6 +146,15 @@ export default {
   },
 
   methods: {
+    logout: function() {
+      firebase.auth().signOut().then(()=> {
+        this.$router.replace('login')
+
+      })
+  
+  },
+    
+
     showDynamicComponentModal(id) {
       const endpoind = "/api/v1/beers/" + id;
       let stringIngredient = [];
@@ -214,9 +224,9 @@ export default {
         });
       });
     },
-    logout() {
-      localStorage.clear();
-    },
+    // logout() {
+    //   localStorage.clear();
+    // },
   },
 };
 </script>
