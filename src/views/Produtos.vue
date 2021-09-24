@@ -1,13 +1,6 @@
 <template>
   <main>
-    <div class="usuario">
-      <router-link :to="{ name: 'Entrada' }">
-        <b-button size="sm" variant="outline-light" @click="login"
-          >Sair
-        </b-button></router-link
-      >
-      {{ usuario }}
-    </div>
+    <Header :usuario="this.usuario" />
 
     <b-row style="display: flex; justify-content: space-between">
       <b-row class="ml-2">
@@ -46,48 +39,12 @@
     <modal min-height="600" name="" />
     <div class="bg"></div>
 
-    <div class="produtos">
-      <div v-for="(produto, index) in produtos" class="produto" :key="index">
-        <div class="produto-container">
-          <p id="beer-name">
-            {{ produto.name }}
-          </p>
-          <hr />
-          <div class="produto-propriedades-main">
-            <div class="produto-propriedades">
-              <div class="propriedade" id="fb">
-                <div>Fabricado em:</div>
-                <div>{{ produto.first_brewed }}</div>
-              </div>
-              <div class="propriedade" id="abv">
-                <div>ABV:</div>
-                <div>{{ produto.abv }}</div>
-              </div>
-              <div class="propriedade" id="ibu">
-                <div>IBU:</div>
-                <div>{{ produto.ibu }}</div>
-              </div>
-              <div class="propriedade" id="ph">
-                <div>PH:</div>
-                <div>{{ produto.ph }}</div>
-              </div>
-              <div class="propriedade" id="al">
-                <div>Attenuation Level:</div>
-                <div>{{ produto.attenuation_level }}</div>
-              </div>
-              <hr />
-            </div>
-          </div>
-          <div class="btn-descricao">
-            <button
-              class="descricao"
-              @click="showDynamicComponentModal(produto.id)"
-            >
-              Descrição
-            </button>
-          </div>
-        </div>
-      </div>
+    <div>
+      <b-table striped hover :items="this.produtos">
+        <template #cell(image)="data">
+        <span v-html="data.value"></span>
+      </template>
+      </b-table>
     </div>
   </main>
 </template>
@@ -97,10 +54,11 @@ import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
 import Pagination from "../components/Pagination";
 import ModalCustom from "../components/ModalCustom";
+import Header from "@/components/Header";
 
 export default {
   name: "Produtos",
-  components: {},
+  components: { Header },
   data() {
     return {
       produtos: [],
@@ -137,6 +95,27 @@ export default {
         .get("/api/v1/beers", { headers: this.headers })
         .then((response) => {
           this.produtos = response.data;
+          this.produtos = this.produtos.map((value) => {
+            const {
+              name,
+              first_brewed,
+              abv,
+              ibu,
+              ph,
+              attenuation_level,
+              // image_url,
+            } = value;
+            console.log("RESPONSE DATA: ", value);
+            return {
+              name,
+              first_brewed,
+              abv,
+              ibu,
+              ph,
+              attenuation_level,
+              // image: `<img src="${image_url}" height="100" />`,
+            };
+          });
         })
         .catch((error) => {
           console.warn("Error", error);
@@ -214,9 +193,6 @@ export default {
         });
       });
     },
-    logout() {
-      localStorage.clear();
-    },
   },
 };
 </script>
@@ -252,19 +228,10 @@ export default {
   justify-content: center;
 }
 
-/* ---- */
-.usuario {
-  color: black;
-  width: 80%;
-  height: 35px;
-  margin-right: 100;
-  margin-left: 20px;
-  margin-top: -30px;
-}
 .Busca {
   width: 60%;
   margin-right: 40px;
-  }
+}
 /* .... */
 
 #beer-name {

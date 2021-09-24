@@ -2,9 +2,9 @@
   <main>
     <div class="limiter">
       <div class="container-login100" style="background-image">
-        <b-card>
+        <b-card class="card-login">
           <div class="Login" id="login">
-          <span class="login100-form-title p-b-49 mb-4"> LOGIN {main} </span>
+          <span class="login100-form-title p-b-49 mb-4"> LOGIN </span>
 
           <div class="mb-2">Username</div>
           <b-form-input
@@ -67,6 +67,10 @@ main {
   background-color: var(--color-background);
   justify-content: center;
   align-items: center;
+}
+
+.card-login {
+  box-shadow: 1px 2px 5px rgba(0,0,0,.2);
 }
 
 .button {
