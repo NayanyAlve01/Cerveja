@@ -33,7 +33,7 @@ header {
   display: flex;
   justify-content: flex-end;
   box-shadow: 0 2px 3px rgba(10,10,10,.2);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 nav {
@@ -51,7 +51,7 @@ nav {
   flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
-  width: 38%;
+  width: 220px;
 }
 
 .btn-sair {
