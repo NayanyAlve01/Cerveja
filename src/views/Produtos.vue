@@ -1,11 +1,11 @@
 <template>
   <main>
     <div class="usuario">
-      <router-link :to="{ name: 'Entrada' }">
-        <b-button size="sm" variant="outline-light" @click="logout"
-          >Sair
-        </b-button></router-link
-      >
+      <router-link to="/produtos">
+        <b-button size="sm" variant="outline-light" @click="logout">
+          Sair
+        </b-button>
+      </router-link>
       {{ usuario }}
     </div>
 
@@ -264,7 +264,7 @@ export default {
 .Busca {
   width: 60%;
   margin-right: 40px;
-  }
+}
 /* .... */
 
 #beer-name {
