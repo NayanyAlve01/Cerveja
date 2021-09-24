@@ -103,7 +103,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
-              image_url,
+              // image_url,
             } = value;
             console.log("RESPONSE DATA: ", value);
             return {
@@ -113,7 +113,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
-              image: `<img src="${image_url}" height="100" />`,
+              // image: `<img src="${image_url}" height="100" />`,
             };
           });
         })
