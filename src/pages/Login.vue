@@ -4,7 +4,7 @@
       <div class="container-login100" style="background-image">
         <b-card>
           <div class="Login" id="login">
-          <span class="login100-form-title p-b-49 mb-4"> LOGIN </span>
+          <span class="login100-form-title p-b-49 mb-4"> LOGIN {main} </span>
 
           <div class="mb-2">Username</div>
           <b-form-input
