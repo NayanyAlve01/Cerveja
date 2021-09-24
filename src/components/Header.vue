@@ -1,20 +1,28 @@
 <template>
   <header>
     <nav class="container">
-      <!-- <ul>
-        <li><a href="/">Login</a></li>
-      </ul> -->
+      <div class="usuario">
+        <div class="btn-sair">
+          <b-link href="/" @click="logout">
+            <b-icon-box-arrow-left></b-icon-box-arrow-left>
+            <span> Sair </span>
+          </b-link>
+        </div>
+        {{ usuario }}
+      </div>
     </nav>
   </header>
 </template>
 
 <script>
-
 export default {
+  props: ["usuario"],
   nome: "Header",
-
- 
-  
+  methods: {
+    logout() {
+      localStorage.clear();
+    },
+  },
 };
 </script>
 
@@ -22,44 +30,32 @@ export default {
 header {
   background-color: var(--color-background-nav);
   width: 100%;
-  height: 30px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  box-shadow: 0 2px 3px rgba(10,10,10,.2);
+  margin-bottom: 8px;
 }
+
 nav {
+  margin: 4px 0;
   display: flex;
-  justify-content: space-between;
-  height: 10px;
-  align-items: center;
-}
-
-ul {
-  list-style: none;
-  text-align: center;
-  width: 100%;
-  height: 30px;
-  justify-items: left;
-}
-
-ul li {
-  margin: 20px 0px;
-}
-ul li a {
-  color: var(--color-text-light);
+  justify-content: flex-end;
 }
 
 @media (min-width: 576px) {
 }
 
-ul {
+.usuario {
+  color: black;
   display: flex;
   flex-direction: row-reverse;
-  height: 60px;
   align-items: center;
+  justify-content: space-between;
+  width: 220px;
 }
-ul li {
-  margin: 0;
-  margin-left: 20px;
+
+.btn-sair {
+  width: 30%;
+  color: #0056b3;
 }
 </style>
