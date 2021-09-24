@@ -1,13 +1,6 @@
 <template>
   <main>
-    <div class="usuario">
-      <router-link to="/produtos">
-        <b-button size="sm" variant="outline-light" @click="logout">
-          Sair
-        </b-button>
-      </router-link>
-      {{ usuario }}
-    </div>
+    <Header :usuario="this.usuario" />
 
     <b-row style="display: flex; justify-content: space-between">
       <b-row class="ml-2">
@@ -97,10 +90,11 @@ import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
 import Pagination from "../components/Pagination";
 import ModalCustom from "../components/ModalCustom";
+import Header from '@/components/Header';
 
 export default {
   name: "Produtos",
-  components: {},
+  components: {Header},
   data() {
     return {
       produtos: [],
@@ -214,9 +208,6 @@ export default {
         });
       });
     },
-    logout() {
-      localStorage.clear();
-    },
   },
 };
 </script>
@@ -252,15 +243,6 @@ export default {
   justify-content: center;
 }
 
-/* ---- */
-.usuario {
-  color: black;
-  width: 80%;
-  height: 35px;
-  margin-right: 100;
-  margin-left: 20px;
-  margin-top: -30px;
-}
 .Busca {
   width: 60%;
   margin-right: 40px;

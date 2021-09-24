@@ -8,8 +8,6 @@
 
 <script>
 import "./styles/global.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 // an example array of items to be paged
 const exampleItems = [...Array(500).keys()].map((i) => ({
@@ -19,8 +17,6 @@ const exampleItems = [...Array(500).keys()].map((i) => ({
 export default {
   name: "App",
   components: {
-    Header,
-    Footer,
   },
   data() {
     return {
