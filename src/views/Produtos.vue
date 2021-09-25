@@ -39,12 +39,11 @@
     <modal min-height="600" name="" />
     <div class="bg"></div>
 
-    <div>
-      <b-table striped hover :items="this.produtos">
-        <template #cell(image)="data">
-        <span v-html="data.value"></span>
-      </template>
-      </b-table>
+    <div class="table-container">
+      <div class="table-width">
+        <b-table striped hover :items="this.produtos">
+        </b-table>
+      </div>
     </div>
   </main>
 </template>
@@ -103,7 +102,6 @@ export default {
               ibu,
               ph,
               attenuation_level,
-              // image_url,
             } = value;
             console.log("RESPONSE DATA: ", value);
             return {
@@ -113,7 +111,6 @@ export default {
               ibu,
               ph,
               attenuation_level,
-              // image: `<img src="${image_url}" height="100" />`,
             };
           });
         })
@@ -175,7 +172,7 @@ export default {
       const endpoint = `/api/v1/beers?beer_name=${name}`;
       api.get(endpoint, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {
-          this.produtos = response.data; 
+          this.produtos = response.data;
           this.produtos = this.produtos.map((value) => {
             const {
               name,
@@ -212,12 +209,12 @@ export default {
         this.$nextTick(function () {
           this.produtos = response.data;
           this.produtos = this.produtos.map((value) => {
-            const {
-              name,
-              first_brewed,
-              abv,
-              ibu,
-              ph,
+            const { 
+              name, 
+              first_brewed, 
+              abv, 
+              ibu, 
+              ph, 
               attenuation_level,
             } = value;
             console.log("RESPONSE DATA: ", value);
@@ -228,7 +225,6 @@ export default {
               ibu,
               ph,
               attenuation_level,
-              
             };
           });
         });
@@ -330,5 +326,15 @@ export default {
 .submit {
   margin: 55px;
   display: table-column-group;
+}
+
+.table-container {
+  display: flex; 
+  justify-content: center; 
+  margin-top: 18px;
+}
+
+.table-width {
+  width: 80%;
 }
 </style> 

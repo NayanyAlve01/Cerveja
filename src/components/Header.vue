@@ -33,7 +33,7 @@ header {
   display: flex;
   justify-content: flex-end;
   box-shadow: 0 2px 3px rgba(10,10,10,.2);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 nav {
