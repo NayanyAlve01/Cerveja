@@ -39,3 +39,7 @@ h1{
   margin: 40px 0;
   font-size:  30px;
 }
+
+.row {
+  margin-right: 0 !important;
+}
