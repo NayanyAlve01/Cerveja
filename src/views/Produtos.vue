@@ -42,8 +42,8 @@
     <div>
       <b-table striped hover :items="this.produtos">
         <template #cell(image)="data">
-          <span v-html="data.value"></span>
-        </template>
+        <span v-html="data.value"></span>
+      </template>
       </b-table>
     </div>
   </main>
@@ -175,8 +175,8 @@ export default {
       const endpoind = `/api/v1/beers?beer_name=${name}`;
       api.get(endpoind, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {
-          this.produtos = response.data;
-           this.produtos = this.produtos.map((value) => {
+          this.produtos = response.data; 
+          this.produtos = this.produtos.map((value) => {
             const {
               name,
               first_brewed,
@@ -185,6 +185,7 @@ export default {
               ph,
               attenuation_level,
             } = value;
+            console.log("RESPONSE DATA: ", value);
             return {
               name,
               first_brewed,
@@ -194,7 +195,6 @@ export default {
               attenuation_level,
             };
           });
-
         });
       });
     },
@@ -217,9 +217,8 @@ export default {
               ibu,
               ph,
               attenuation_level,
-          
             } = value;
-            
+            console.log("RESPONSE DATA: ", value);
             return {
               name,
               first_brewed,
@@ -231,10 +230,9 @@ export default {
             };
           });
         });
-        });
+      });
     },
   },
-  
 };
 </script>
 
