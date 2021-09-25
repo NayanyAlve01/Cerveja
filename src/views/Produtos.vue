@@ -125,11 +125,11 @@ export default {
 
   methods: {
     showDynamicComponentModal(id) {
-      const endpoind = "/api/v1/beers/" + id;
+      const endpoint = "/api/v1/beers/" + id;
       let stringIngredient = [];
 
       api
-        .get(endpoind, { headers: this.headers })
+        .get(endpoint, { headers: this.headers })
         .then((response) => {
           const produto = response.data[0];
           for (const ingredient in produto.ingredients) {
@@ -165,15 +165,15 @@ export default {
         });
     },
     getRandomBeer() {
-      const endpoind = "/api/v1/beers/random";
-      api.get(endpoind, { headers: this.headers }).then((response) => {
+      const endpoint = "/api/v1/beers/random";
+      api.get(endpoint, { headers: this.headers }).then((response) => {
         this.showDynamicComponentModal(response.data[0].id);
       });
     },
     getBeerName() {
       const name = this.pesquisa;
-      const endpoind = `/api/v1/beers?beer_name=${name}`;
-      api.get(endpoind, { headers: this.headers }).then((response) => {
+      const endpoint = `/api/v1/beers?beer_name=${name}`;
+      api.get(endpoint, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {
           this.produtos = response.data; 
           this.produtos = this.produtos.map((value) => {
@@ -184,6 +184,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              // image_url,
             } = value;
             console.log("RESPONSE DATA: ", value);
             return {
@@ -193,6 +194,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              // image: `<img src="${image_url}" height="100" />`,
             };
           });
         });
@@ -205,8 +207,8 @@ export default {
         teorBusca = "gt";
       }
 
-      const endpoind = `/api/v1/beers?abv_${teorBusca}=10`;
-      api.get(endpoind, { headers: this.headers }).then((response) => {
+      const endpoint = `/api/v1/beers?abv_${teorBusca}=10`;
+      api.get(endpoint, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {
           this.produtos = response.data;
           this.produtos = this.produtos.map((value) => {
