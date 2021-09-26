@@ -5,7 +5,9 @@
     <!-- <SearchBar 
       teor="teor"
     /> -->
-    <b-row style="display: flex; justify-content: space-between">
+     <b-row> 
+    <div class="teor">
+      <!-- style="display: flex; justify-content: space-between"> -->
       <b-row class="ml-2">
         <b-button
           variant="outline-primary"
@@ -25,6 +27,7 @@
           >10% - 55%
         </b-button>
       </b-row>
+      </div>
       <div class="Busca">
         <b-row>
           <b-col>
@@ -37,8 +40,9 @@
             >Random</b-button
           >
         </b-row>
+
       </div>
-    </b-row>
+      </b-row>
     <!-- <div class="bg"></div> -->
 
     <div class="table-container">
@@ -46,7 +50,7 @@
         <b-table striped hover :items="this.beers">
           <template #cell(description)="data">
             <!-- <span v-html="data.value"></span>     -->
-            <b-button variant="primary" @click="descriptionModal(data.value)">Description</b-button>
+            <b-button variant="outline-primary" @click="descriptionModal(data.value)">Description</b-button>
           </template>
         </b-table>
       </div>
@@ -58,7 +62,7 @@
 <script>
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
-import { Modal, Header, Pagination } from "@/components";
+import { Modal, Header, } from "@/components";
 
 export default {
   name: "beers",
@@ -73,7 +77,7 @@ export default {
       headers: {},
       page: 1,
       decoded: {},
-      Pagination,
+      
     };
   },
   created() {
@@ -165,7 +169,9 @@ export default {
       api.get(endpoint, { headers: this.headers }).then((response) => {
         // this.showDynamicComponentModal(response.data[0].id);
         this.descriptionModal(response.data[0].id);
-      });
+       
+      }
+    );
     },
     getBeerName() {
       const name = this.pesquisa;
@@ -266,6 +272,15 @@ export default {
   width: 100%;
 }
 
+.teor{
+  margin: 20px 120px;
+  width: 20%;
+  
+}
+  .Busca {
+    width: 50%;
+    margin: 20px;
+  }
 .descricao {
   color: white;
   background-color: #8b8989;
@@ -289,10 +304,6 @@ export default {
   justify-content: center;
 }
 
-.Busca {
-  width: 60%;
-  margin-right: 40px;
-}
 /* .... */
 
 #beer-name {

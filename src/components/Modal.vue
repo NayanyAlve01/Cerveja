@@ -1,6 +1,8 @@
 <template>
+
   <b-modal id="modal-1" :title="beer.name" size="xl">
     <div class="descriptions">
+    
       <div>
         <p><strong>Tagline: </strong> {{ beer.tagline }}</p>
         <p><strong>Descrição:</strong> {{ beer.description }}</p>
@@ -58,6 +60,8 @@ export default {
 };
 </script>
 <style scoped>
+
+
 .description-img {
   border-left: 2px solid #999;
   padding-left: 10px;
