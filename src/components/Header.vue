@@ -16,8 +16,8 @@
 
 <script>
 export default {
-  props: ["usuario"],
   nome: "Header",
+  props: ["usuario"],
   methods: {
     logout() {
       localStorage.clear();

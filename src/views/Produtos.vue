@@ -2,6 +2,9 @@
   <main>
     <Header :usuario="this.usuario" />
 
+    <!-- <SearchBar 
+      teor="teor"
+    /> -->
     <b-row style="display: flex; justify-content: space-between">
       <b-row class="ml-2">
         <b-button
@@ -36,15 +39,14 @@
         </b-row>
       </div>
     </b-row>
-    <!-- <modal min-height="600" name="" /> -->
-    <div class="bg"></div>
+    <!-- <div class="bg"></div> -->
 
     <div class="table-container">
       <div class="table-width">
         <b-table striped hover :items="this.beers">
           <template #cell(description)="data">
             <!-- <span v-html="data.value"></span>     -->
-            <button @click="descriptionModal(data.value)">Descrição</button>
+            <b-button variant="primary" @click="descriptionModal(data.value)">Description</b-button>
           </template>
         </b-table>
       </div>
@@ -97,8 +99,8 @@ export default {
       api
         .get("/api/v1/beers", { headers: this.headers })
         .then((response) => {
-          this.beers = response.data;
-          this.beers = this.beers.map((value) => {
+          console.log('REPONSE DATA: ', response.data);
+          this.beers = response.data.map((value) => {
             const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
               value;
             // console.log("RESPONSE DATA: ", value);
@@ -179,6 +181,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              id,
               // image_url,
             } = value;
             console.log("RESPONSE DATA: ", value);
@@ -189,6 +192,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              description: id,
               // image: `<img src="${image_url}" height="100" />`,
             };
           });
@@ -207,7 +211,7 @@ export default {
         this.$nextTick(function () {
           this.beers = response.data;
           this.beers = this.beers.map((value) => {
-            const { name, first_brewed, abv, ibu, ph, attenuation_level } =
+            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
               value;
             console.log("RESPONSE DATA: ", value);
             return {
@@ -217,6 +221,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              description: id,
             };
           });
         });
@@ -234,18 +239,18 @@ export default {
         this.beer.ingredients_malt = beer.ingredients.malt;
         this.beer.ingredients_hops = beer.ingredients.hops;
         this.beer.ingredients_yeast = beer.ingredients.yeast;
-      //   for (const ingredient in beer.ingredients) {
-      //     if (typeof beer.ingredients[ingredient] === "string") {
-      //       stringIngredient.push(
-      //         `${ingredient.toUpperCase()}: ${beer.ingredients[ingredient]}`
-      //       );
-      //     } else {
-      //       const desc = beer.ingredients[ingredient].map((value) => {
-      //         return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
-      //       });
-      //       stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
-      //     }
-      //   }
+        //   for (const ingredient in beer.ingredients) {
+        //     if (typeof beer.ingredients[ingredient] === "string") {
+        //       stringIngredient.push(
+        //         `${ingredient.toUpperCase()}: ${beer.ingredients[ingredient]}`
+        //       );
+        //     } else {
+        //       const desc = beer.ingredients[ingredient].map((value) => {
+        //         return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
+        //       });
+        //       stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
+        //     }
+        //   }
       });
       this.$bvModal.show("modal-1");
     },
