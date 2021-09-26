@@ -97,8 +97,8 @@ export default {
       api
         .get("/api/v1/beers", { headers: this.headers })
         .then((response) => {
-          this.beers = response.data;
-          this.beers = this.beers.map((value) => {
+          console.log('REPONSE DATA: ', response.data);
+          this.beers = response.data.map((value) => {
             const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
               value;
             // console.log("RESPONSE DATA: ", value);
@@ -179,6 +179,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              id,
               // image_url,
             } = value;
             console.log("RESPONSE DATA: ", value);
@@ -189,6 +190,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              description: id,
               // image: `<img src="${image_url}" height="100" />`,
             };
           });
@@ -207,7 +209,7 @@ export default {
         this.$nextTick(function () {
           this.beers = response.data;
           this.beers = this.beers.map((value) => {
-            const { name, first_brewed, abv, ibu, ph, attenuation_level } =
+            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
               value;
             console.log("RESPONSE DATA: ", value);
             return {
@@ -217,6 +219,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              description: id,
             };
           });
         });
@@ -234,18 +237,18 @@ export default {
         this.beer.ingredients_malt = beer.ingredients.malt;
         this.beer.ingredients_hops = beer.ingredients.hops;
         this.beer.ingredients_yeast = beer.ingredients.yeast;
-      //   for (const ingredient in beer.ingredients) {
-      //     if (typeof beer.ingredients[ingredient] === "string") {
-      //       stringIngredient.push(
-      //         `${ingredient.toUpperCase()}: ${beer.ingredients[ingredient]}`
-      //       );
-      //     } else {
-      //       const desc = beer.ingredients[ingredient].map((value) => {
-      //         return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
-      //       });
-      //       stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
-      //     }
-      //   }
+        //   for (const ingredient in beer.ingredients) {
+        //     if (typeof beer.ingredients[ingredient] === "string") {
+        //       stringIngredient.push(
+        //         `${ingredient.toUpperCase()}: ${beer.ingredients[ingredient]}`
+        //       );
+        //     } else {
+        //       const desc = beer.ingredients[ingredient].map((value) => {
+        //         return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
+        //       });
+        //       stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
+        //     }
+        //   }
       });
       this.$bvModal.show("modal-1");
     },
