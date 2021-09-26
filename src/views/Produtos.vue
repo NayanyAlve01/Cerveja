@@ -36,28 +36,35 @@
         </b-row>
       </div>
     </b-row>
-    <modal min-height="600" name="" />
+    <!-- <modal min-height="600" name="" /> -->
     <div class="bg"></div>
 
     <div class="table-container">
       <div class="table-width">
         <b-table striped hover :items="this.produtos">
+          <template #cell(description)="data">
+            <!-- <span v-html="data.value"></span>     -->
+            <button @click="descriptionModal">{{ data.value }}</button>
+          </template>
         </b-table>
       </div>
     </div>
+    <modal name="id" />
   </main>
 </template>
 
 <script>
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
-import Pagination from "../components/Pagination";
-import ModalCustom from "../components/ModalCustom";
-import Header from "@/components/Header";
+// import Pagination from "../components/Pagination";
+// import ModalCustom from "../components/ModalCustom";
+// import Header from "@/components/Header";
+// import Modal from '@/components/Modal';
+import { Modal, Header, Pagination,  } from "@/components";
 
 export default {
   name: "Produtos",
-  components: { Header },
+  components: { Header, Modal },
   data() {
     return {
       produtos: [],
@@ -95,14 +102,8 @@ export default {
         .then((response) => {
           this.produtos = response.data;
           this.produtos = this.produtos.map((value) => {
-            const {
-              name,
-              first_brewed,
-              abv,
-              ibu,
-              ph,
-              attenuation_level,
-            } = value;
+            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
+              value;
             console.log("RESPONSE DATA: ", value);
             return {
               name,
@@ -111,6 +112,7 @@ export default {
               ibu,
               ph,
               attenuation_level,
+              description: id,
             };
           });
         })
@@ -121,46 +123,44 @@ export default {
   },
 
   methods: {
-    showDynamicComponentModal(id) {
-      const endpoint = "/api/v1/beers/" + id;
-      let stringIngredient = [];
+    // showDynamicComponentModal(id) {
+    //   const endpoint = "/api/v1/beers/" + id;
+    //   let stringIngredient = [];
 
-      api
-        .get(endpoint, { headers: this.headers })
-        .then((response) => {
-          const produto = response.data[0];
-          for (const ingredient in produto.ingredients) {
-            if (typeof produto.ingredients[ingredient] === "string") {
-              stringIngredient.push(
-                `${ingredient.toUpperCase()}: ${
-                  produto.ingredients[ingredient]
-                }`
-              );
-            } else {
-              const desc = produto.ingredients[ingredient].map((value) => {
-                return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
-              });
-              stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
-            }
-          }
+    //   api
+    //     .get(endpoint, { headers: this.headers })
+    //     .then((response) => {
+    //       const produto = response.data[0];
+    //       for (const ingredient in produto.ingredients) {
+    //         if (typeof produto.ingredients[ingredient] === "string") {
+    //           stringIngredient.push(
+    //             `${ingredient.toUpperCase()}: ${
+    //               produto.ingredients[ingredient]
+    //             }`
+    //           );
+    //         } else {
+    //           const desc = produto.ingredients[ingredient].map((value) => {
+    //             return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
+    //           });
+    //           stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
+    //         }
+    //       }
 
-          this.$modal.show(ModalCustom, {
-            name: produto.name,
-            tagline: produto.tagline,
-            description: produto.description,
-            image_url: !produto.image_url
-              ? require("../assets/images/img.png")
-              : produto.image_url,
-            volume: produto.volume,
-            ingredients: stringIngredient,
-            food_pairing: produto.food_pairing.join(),
-          });
-        })
-
-        .catch((error) => {
-          console.warn("Error", error);
-        });
-    },
+          // this.$modal.show(ModalCustom, {
+          //   name: produto.name,
+          //   tagline: produto.tagline,
+          //   description: produto.description,
+          //   image_url: !produto.image_url
+          //     ? require("../assets/images/img.png")
+          //     : produto.image_url,
+          //   volume: produto.volume,
+          //   ingredients: stringIngredient,
+          //   food_pairing: produto.food_pairing.join(),
+          // });
+    //     }).catch((error) => {
+    //       console.warn("Error", error);
+    //     });
+    // },
     getRandomBeer() {
       const endpoint = "/api/v1/beers/random";
       api.get(endpoint, { headers: this.headers }).then((response) => {
@@ -209,14 +209,8 @@ export default {
         this.$nextTick(function () {
           this.produtos = response.data;
           this.produtos = this.produtos.map((value) => {
-            const { 
-              name, 
-              first_brewed, 
-              abv, 
-              ibu, 
-              ph, 
-              attenuation_level,
-            } = value;
+            const { name, first_brewed, abv, ibu, ph, attenuation_level } =
+              value;
             console.log("RESPONSE DATA: ", value);
             return {
               name,
@@ -229,6 +223,9 @@ export default {
           });
         });
       });
+    },
+    descriptionModal() {
+      this.$bvModal.show("modal-1");
     },
   },
 };
@@ -329,8 +326,8 @@ export default {
 }
 
 .table-container {
-  display: flex; 
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
   margin-top: 18px;
 }
 
