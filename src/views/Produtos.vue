@@ -2,6 +2,9 @@
   <main>
     <Header :usuario="this.usuario" />
 
+    <!-- <SearchBar 
+      teor="teor"
+    /> -->
     <b-row style="display: flex; justify-content: space-between">
       <b-row class="ml-2">
         <b-button
@@ -36,15 +39,14 @@
         </b-row>
       </div>
     </b-row>
-    <!-- <modal min-height="600" name="" /> -->
-    <div class="bg"></div>
+    <!-- <div class="bg"></div> -->
 
     <div class="table-container">
       <div class="table-width">
         <b-table striped hover :items="this.beers">
           <template #cell(description)="data">
             <!-- <span v-html="data.value"></span>     -->
-            <button @click="descriptionModal(data.value)">Descrição</button>
+            <b-button variant="primary" @click="descriptionModal(data.value)">Description</b-button>
           </template>
         </b-table>
       </div>
