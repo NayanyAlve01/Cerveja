@@ -5,28 +5,28 @@
     <!-- <SearchBar 
       teor="teor"
     /> -->
-     <b-row> 
-    <div class="teor">
-      <!-- style="display: flex; justify-content: space-between"> -->
-      <b-row class="ml-2">
-        <b-button
-          variant="outline-primary"
-          class="ml-4"
-          @click="teor"
-          name="teor"
-          value="0"
-        >
-          0% - 10%
-        </b-button>
-        <b-button
-          variant="outline-primary"
-          class="ml-2"
-          @click="teor"
-          name="teor"
-          value="1"
-          >10% - 55%
-        </b-button>
-      </b-row>
+    <b-row>
+      <div class="teor">
+        <!-- style="display: flex; justify-content: space-between"> -->
+        <b-row class="ml-2">
+          <b-button
+            variant="outline-primary"
+            class="ml-4"
+            @click="teor"
+            name="teor"
+            value="0"
+          >
+            0% - 10%
+          </b-button>
+          <b-button
+            variant="outline-primary"
+            class="ml-2"
+            @click="teor"
+            name="teor"
+            value="1"
+            >10% - 55%
+          </b-button>
+        </b-row>
       </div>
       <div class="Busca">
         <b-row>
@@ -40,9 +40,8 @@
             >Random</b-button
           >
         </b-row>
-
       </div>
-      </b-row>
+    </b-row>
     <!-- <div class="bg"></div> -->
 
     <div class="table-container">
@@ -50,7 +49,11 @@
         <b-table striped hover :items="this.beers">
           <template #cell(description)="data">
             <!-- <span v-html="data.value"></span>     -->
-            <b-button variant="outline-primary" @click="descriptionModal(data.value)">Description</b-button>
+            <b-button
+              variant="outline-primary"
+              @click="descriptionModal(data.value)"
+              >Descrição</b-button
+            >
           </template>
         </b-table>
       </div>
@@ -62,7 +65,7 @@
 <script>
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
-import { Modal, Header, } from "@/components";
+import { Modal, Header } from "@/components";
 
 export default {
   name: "beers",
@@ -76,8 +79,8 @@ export default {
       showModal: false,
       headers: {},
       page: 1,
+      pagination: 1,
       decoded: {},
-      
     };
   },
   created() {
@@ -103,7 +106,7 @@ export default {
       api
         .get("/api/v1/beers", { headers: this.headers })
         .then((response) => {
-          console.log('REPONSE DATA: ', response.data);
+          console.log("REPONSE DATA: ", response.data);
           this.beers = response.data.map((value) => {
             const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
               value;
@@ -129,7 +132,6 @@ export default {
     // showDynamicComponentModal(id) {
     //   const endpoint = "/api/v1/beers/" + id;
     //   let stringIngredient = [];
-
     //   api
     //     .get(endpoint, { headers: this.headers })
     //     .then((response) => {
@@ -148,7 +150,6 @@ export default {
     //           stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
     //         }
     //       }
-
     // this.$modal.show(ModalCustom, {
     //   name: beer.name,
     //   tagline: beer.tagline,
@@ -164,102 +165,100 @@ export default {
     //       console.warn("Error", error);
     //     });
     // },
-    getRandomBeer() {
-      const endpoint = "/api/v1/beers/random";
-      api.get(endpoint, { headers: this.headers }).then((response) => {
-        // this.showDynamicComponentModal(response.data[0].id);
-        this.descriptionModal(response.data[0].id);
-       
-      }
-    );
-    },
-    getBeerName() {
-      const name = this.pesquisa;
-      const endpoint = `/api/v1/beers?beer_name=${name}`;
-      api.get(endpoint, { headers: this.headers }).then((response) => {
-        this.$nextTick(function () {
-          this.beers = response.data;
-          this.beers = this.beers.map((value) => {
-            const {
-              name,
-              first_brewed,
-              abv,
-              ibu,
-              ph,
-              attenuation_level,
-              id,
-              // image_url,
-            } = value;
-            console.log("RESPONSE DATA: ", value);
-            return {
-              name,
-              first_brewed,
-              abv,
-              ibu,
-              ph,
-              attenuation_level,
-              description: id,
-              // image: `<img src="${image_url}" height="100" />`,
-            };
-          });
+  },
+  getRandomBeer() {
+    const endpoint = "/api/v1/beers/random";
+    api.get(endpoint, { headers: this.headers }).then((response) => {
+      // this.showDynamicComponentModal(response.data[0].id);
+      this.descriptionModal(response.data[0].id);
+    });
+  },
+  getBeerName() {
+    const name = this.pesquisa;
+    const endpoint = `/api/v1/beers?beer_name=${name}`;
+    api.get(endpoint, { headers: this.headers }).then((response) => {
+      this.$nextTick(function () {
+        this.beers = response.data;
+        this.beers = this.beers.map((value) => {
+          const {
+            name,
+            first_brewed,
+            abv,
+            ibu,
+            ph,
+            attenuation_level,
+            id,
+            // image_url,
+          } = value;
+          console.log("RESPONSE DATA: ", value);
+          return {
+            name,
+            first_brewed,
+            abv,
+            ibu,
+            ph,
+            attenuation_level,
+            description: id,
+            // image: `<img src="${image_url}" height="100" />`,
+          };
         });
       });
-    },
-    teor(valor) {
-      let teorBusca = "lt";
+    });
+  },
+  teor(valor) {
+    let teorBusca = "lt";
 
-      if (valor.target.value[0] === "1") {
-        teorBusca = "gt";
-      }
+    if (valor.target.value[0] === "1") {
+      teorBusca = "gt";
+    }
 
-      const endpoint = `/api/v1/beers?abv_${teorBusca}=10`;
-      api.get(endpoint, { headers: this.headers }).then((response) => {
-        this.$nextTick(function () {
-          this.beers = response.data;
-          this.beers = this.beers.map((value) => {
-            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
-              value;
-            console.log("RESPONSE DATA: ", value);
-            return {
-              name,
-              first_brewed,
-              abv,
-              ibu,
-              ph,
-              attenuation_level,
-              description: id,
-            };
-          });
+    const endpoint = `/api/v1/beers?abv_${teorBusca}=10`;
+    api.get(endpoint, { headers: this.headers }).then((response) => {
+      this.$nextTick(function () {
+        this.beers = response.data;
+        this.beers = this.beers.map((value) => {
+          const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
+            value;
+          console.log("RESPONSE DATA: ", value);
+          return {
+            name,
+            first_brewed,
+            abv,
+            ibu,
+            ph,
+            attenuation_level,
+            description: id,
+          };
         });
       });
-    },
-    async descriptionModal(id) {
-      console.log("ID PARA MODAL: ", id);
-      const endpoint = "/api/v1/beers/" + id;
-      // let stringIngredient = [];
+    });
+  },
+  async descriptionModal(id) {
+    console.log("ID PARA MODAL: ", id);
+    const endpoint = "/api/v1/beers/" + id;
+    // let stringIngredient = [];
 
-      await api.get(endpoint, { headers: this.headers }).then((response) => {
-        const beer = response.data[0];
-        this.beer = beer;
-        console.log("BEER INGREDIENTES: ", beer.ingredients);
-        this.beer.ingredients_malt = beer.ingredients.malt;
-        this.beer.ingredients_hops = beer.ingredients.hops;
-        this.beer.ingredients_yeast = beer.ingredients.yeast;
-        //   for (const ingredient in beer.ingredients) {
-        //     if (typeof beer.ingredients[ingredient] === "string") {
-        //       stringIngredient.push(
-        //         `${ingredient.toUpperCase()}: ${beer.ingredients[ingredient]}`
-        //       );
-        //     } else {
-        //       const desc = beer.ingredients[ingredient].map((value) => {
-        //         return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
-        //       });
-        //       stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
-        //     }
-        //   }
-      });
-      this.$bvModal.show("modal-1");
-    },
+    await api.get(endpoint, { headers: this.headers }).then((response) => {
+      const beer = response.data[0];
+      this.beer = beer;
+      console.log("BEER INGREDIENTES: ", beer.ingredients);
+      this.beer.ingredients_malt = beer.ingredients.malt;
+      this.beer.ingredients_hops = beer.ingredients.hops;
+      this.beer.ingredients_yeast = beer.ingredients.yeast;
+      //   for (const ingredient in beer.ingredients) {
+      //     if (typeof beer.ingredients[ingredient] === "string") {
+      //       stringIngredient.push(
+      //         `${ingredient.toUpperCase()}: ${beer.ingredients[ingredient]}`
+      //       );
+      //     } else {
+      //       const desc = beer.ingredients[ingredient].map((value) => {
+      //         return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
+      //       });
+      //       stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
+      //     }
+      //   }
+    });
+    this.$bvModal.show("modal-1");
   },
 };
 </script>
@@ -272,15 +271,14 @@ export default {
   width: 100%;
 }
 
-.teor{
+.teor {
   margin: 20px 120px;
   width: 20%;
-  
 }
-  .Busca {
-    width: 50%;
-    margin: 20px;
-  }
+.Busca {
+  width: 50%;
+  margin: 20px;
+}
 .descricao {
   color: white;
   background-color: #8b8989;

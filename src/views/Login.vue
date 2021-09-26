@@ -4,7 +4,7 @@
       <div class="container-login100" style="background-image">
         <b-card class="card-login">
           <div class="Login" id="login">
-          <span class="login100-form-title p-b-49 mb-4"> LOGIN </span>
+          <span class="login100-form-title p-b-49 mb-4"> Login </span>
 
           <div class="mb-2">Username</div>
           <b-form-input
@@ -18,9 +18,10 @@
             v-model="form.password"
             placeholder="Password"
           ></b-form-input>
-
+          <div class="entrar">
           <div class="mt-3">
-            <b-button variant="primary" @click="login">Entrar</b-button>
+            <b-button variant="outline-primary" @click="login">Entrar</b-button>
+            </div>
           </div>
           </div>
         </b-card>
@@ -68,7 +69,9 @@ main {
   justify-content: center;
   align-items: center;
 }
-
+.entrar{
+  margin: 20px 80px;
+}
 .card-login {
   box-shadow: 1px 2px 5px rgba(0,0,0,.2);
 }

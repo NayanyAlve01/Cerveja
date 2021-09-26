@@ -8,7 +8,7 @@
             <span> Sair </span>
           </b-link>
         </div>
-        {{ usuario }}
+     Bem vindo, {{ usuario }}
       </div>
     </nav>
   </header>
@@ -46,12 +46,12 @@ nav {
 }
 
 .usuario {
-  color: black;
+  color: white;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
-  width: 220px;
+  width: 250px;
 }
 
 .btn-sair {
