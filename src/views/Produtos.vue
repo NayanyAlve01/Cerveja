@@ -41,33 +41,30 @@
 
     <div class="table-container">
       <div class="table-width">
-        <b-table striped hover :items="this.produtos">
+        <b-table striped hover :items="this.beers">
           <template #cell(description)="data">
             <!-- <span v-html="data.value"></span>     -->
-            <button @click="descriptionModal">{{ data.value }}</button>
+            <button @click="descriptionModal(data.value)">Descrição</button>
           </template>
         </b-table>
       </div>
     </div>
-    <modal name="id" />
+    <modal :beer="this.beer" />
   </main>
 </template>
 
 <script>
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
-// import Pagination from "../components/Pagination";
-// import ModalCustom from "../components/ModalCustom";
-// import Header from "@/components/Header";
-// import Modal from '@/components/Modal';
-import { Modal, Header, Pagination,  } from "@/components";
+import { Modal, Header, Pagination } from "@/components";
 
 export default {
-  name: "Produtos",
+  name: "beers",
   components: { Header, Modal },
   data() {
     return {
-      produtos: [],
+      beers: [],
+      beer: {},
       pesquisa: "",
       usuario: "",
       showModal: false,
@@ -100,11 +97,11 @@ export default {
       api
         .get("/api/v1/beers", { headers: this.headers })
         .then((response) => {
-          this.produtos = response.data;
-          this.produtos = this.produtos.map((value) => {
+          this.beers = response.data;
+          this.beers = this.beers.map((value) => {
             const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
               value;
-            console.log("RESPONSE DATA: ", value);
+            // console.log("RESPONSE DATA: ", value);
             return {
               name,
               first_brewed,
@@ -130,33 +127,33 @@ export default {
     //   api
     //     .get(endpoint, { headers: this.headers })
     //     .then((response) => {
-    //       const produto = response.data[0];
-    //       for (const ingredient in produto.ingredients) {
-    //         if (typeof produto.ingredients[ingredient] === "string") {
+    //       const beer = response.data[0];
+    //       for (const ingredient in beer.ingredients) {
+    //         if (typeof beer.ingredients[ingredient] === "string") {
     //           stringIngredient.push(
     //             `${ingredient.toUpperCase()}: ${
-    //               produto.ingredients[ingredient]
+    //               beer.ingredients[ingredient]
     //             }`
     //           );
     //         } else {
-    //           const desc = produto.ingredients[ingredient].map((value) => {
+    //           const desc = beer.ingredients[ingredient].map((value) => {
     //             return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
     //           });
     //           stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
     //         }
     //       }
 
-          // this.$modal.show(ModalCustom, {
-          //   name: produto.name,
-          //   tagline: produto.tagline,
-          //   description: produto.description,
-          //   image_url: !produto.image_url
-          //     ? require("../assets/images/img.png")
-          //     : produto.image_url,
-          //   volume: produto.volume,
-          //   ingredients: stringIngredient,
-          //   food_pairing: produto.food_pairing.join(),
-          // });
+    // this.$modal.show(ModalCustom, {
+    //   name: beer.name,
+    //   tagline: beer.tagline,
+    //   description: beer.description,
+    //   image_url: !beer.image_url
+    //     ? require("../assets/images/img.png")
+    //     : beer.image_url,
+    //   volume: beer.volume,
+    //   ingredients: stringIngredient,
+    //   food_pairing: beer.food_pairing.join(),
+    // });
     //     }).catch((error) => {
     //       console.warn("Error", error);
     //     });
@@ -164,7 +161,8 @@ export default {
     getRandomBeer() {
       const endpoint = "/api/v1/beers/random";
       api.get(endpoint, { headers: this.headers }).then((response) => {
-        this.showDynamicComponentModal(response.data[0].id);
+        // this.showDynamicComponentModal(response.data[0].id);
+        this.descriptionModal(response.data[0].id);
       });
     },
     getBeerName() {
@@ -172,8 +170,8 @@ export default {
       const endpoint = `/api/v1/beers?beer_name=${name}`;
       api.get(endpoint, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {
-          this.produtos = response.data;
-          this.produtos = this.produtos.map((value) => {
+          this.beers = response.data;
+          this.beers = this.beers.map((value) => {
             const {
               name,
               first_brewed,
@@ -207,8 +205,8 @@ export default {
       const endpoint = `/api/v1/beers?abv_${teorBusca}=10`;
       api.get(endpoint, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {
-          this.produtos = response.data;
-          this.produtos = this.produtos.map((value) => {
+          this.beers = response.data;
+          this.beers = this.beers.map((value) => {
             const { name, first_brewed, abv, ibu, ph, attenuation_level } =
               value;
             console.log("RESPONSE DATA: ", value);
@@ -224,7 +222,31 @@ export default {
         });
       });
     },
-    descriptionModal() {
+    async descriptionModal(id) {
+      console.log("ID PARA MODAL: ", id);
+      const endpoint = "/api/v1/beers/" + id;
+      // let stringIngredient = [];
+
+      await api.get(endpoint, { headers: this.headers }).then((response) => {
+        const beer = response.data[0];
+        this.beer = beer;
+        console.log("BEER INGREDIENTES: ", beer.ingredients);
+        this.beer.ingredients_malt = beer.ingredients.malt;
+        this.beer.ingredients_hops = beer.ingredients.hops;
+        this.beer.ingredients_yeast = beer.ingredients.yeast;
+      //   for (const ingredient in beer.ingredients) {
+      //     if (typeof beer.ingredients[ingredient] === "string") {
+      //       stringIngredient.push(
+      //         `${ingredient.toUpperCase()}: ${beer.ingredients[ingredient]}`
+      //       );
+      //     } else {
+      //       const desc = beer.ingredients[ingredient].map((value) => {
+      //         return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
+      //       });
+      //       stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
+      //     }
+      //   }
+      });
       this.$bvModal.show("modal-1");
     },
   },
@@ -249,7 +271,7 @@ export default {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.produto-propriedades {
+.beer-propriedades {
   width: 80%;
 }
 .propriedade {
@@ -257,7 +279,7 @@ export default {
   justify-content: space-between;
 }
 
-.produto-propriedades-main {
+.beer-propriedades-main {
   display: flex;
   justify-content: center;
 }
@@ -273,10 +295,10 @@ export default {
   text-align: center;
 }
 
-.produtos {
+.beers {
   display: flex;
 }
-.produto {
+.beer {
   display: flex;
   justify-content: center;
   margin: 30px 40px;
@@ -287,16 +309,16 @@ export default {
   box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
 }
 
-.produto-container {
+.beer-container {
   margin: 10px 0;
   width: 82%;
 }
-.produto img {
+.beer img {
   width: 30%;
 }
 
 @media (min-width: 700px) {
-  .produtos {
+  .beers {
     flex-direction: row;
     align-items: flex-start;
     flex-wrap: wrap;
