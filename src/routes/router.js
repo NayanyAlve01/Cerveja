@@ -17,7 +17,7 @@ const routes = [
         component: Produtos,
         name: 'beer',
         beforeEnter: (to, from, next) => {
-            console.log('BEFORE ENTER');
+            // console.log('BEFORE ENTER');
             if (!store.state.authenticated) {
                 next('/');
             } else {

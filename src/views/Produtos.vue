@@ -2,9 +2,7 @@
   <main>
     <Header :usuario="this.usuario" />
 
-    <!-- <SearchBar 
-      teor="teor"
-    /> -->
+    
     <b-row>
       <div class="teor">
         <b-row class="ml-2">
@@ -54,6 +52,14 @@
           </template>
         </b-table>
       </div>
+      <div @click="request">
+        <b-pagination
+          v-model="page"
+          :total-rows="325"
+          :per-page="this.perPage"
+          aria-controls="my-table"
+        ></b-pagination>
+      </div>
     </div>
     <modal :beer="this.beer" />
   </main>
@@ -73,10 +79,9 @@ export default {
       beer: {},
       pesquisa: "",
       usuario: "",
-      showModal: false,
       headers: {},
       page: 1,
-      pagination: 1,
+      perPage: 25,
       decoded: {},
     };
   },
@@ -98,33 +103,14 @@ export default {
     };
 
     try {
-      api
-        .get("/api/v1/beers", { headers: this.headers })
-        .then((response) => {
-          console.log("REPONSE DATA: ", response.data);
-          this.beers = response.data.map((value) => {
-            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
-              value;
-            return {
-              name,
-              first_brewed,
-              abv,
-              ibu,
-              ph,
-              attenuation_level,
-              description: id,
-            };
-          });
-        })
-        .catch((error) => {
-          console.warn("Error", error);
-        });
+      this.request();
 
       this.$store.commit("setAuth", true);
     } catch (e) {
       this.$store.commit("setAuth", false);
     }
   },
+
   methods: {
     getRandomBeer() {
       const endpoint = "/api/v1/beers/random";
@@ -197,6 +183,30 @@ export default {
         this.beer.ingredients_yeast = beer.ingredients.yeast;
       });
       this.$bvModal.show("modal-1");
+    },
+    request() {
+      api
+        .get(`/api/v1/beers?page=${this.page}&per_page=${this.perPage}`, {
+          headers: this.headers,
+        })
+        .then((response) => {
+          this.beers = response.data.map((value) => {
+            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
+              value;
+            return {
+              name,
+              first_brewed,
+              abv,
+              ibu,
+              ph,
+              attenuation_level,
+              description: id,
+            };
+          });
+        })
+        .catch((error) => {
+          console.warn("Error", error);
+        });
     },
   },
 };
@@ -302,7 +312,8 @@ export default {
 
 .table-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin-top: 18px;
 }
 
