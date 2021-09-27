@@ -7,7 +7,6 @@
     /> -->
     <b-row>
       <div class="teor">
-        <!-- style="display: flex; justify-content: space-between"> -->
         <b-row class="ml-2">
           <b-button
             variant="outline-primary"
@@ -42,13 +41,11 @@
         </b-row>
       </div>
     </b-row>
-    <!-- <div class="bg"></div> -->
 
     <div class="table-container">
       <div class="table-width">
         <b-table striped hover :items="this.beers">
           <template #cell(description)="data">
-            <!-- <span v-html="data.value"></span>     -->
             <b-button
               variant="outline-primary"
               @click="descriptionModal(data.value)"
@@ -91,18 +88,16 @@ export default {
 
   beforeMount() {
     const token = localStorage.getItem("token");
+    this.decoded = jwt_decode(token);
+    this.usuario = this.decoded.user.name;
 
-    if (!token) {
-      document.location.pathname = "/";
-    } else {
-      this.decoded = jwt_decode(token);
-      this.usuario = this.decoded.user.name;
+    const authorization = "Bearer " + token;
+    this.headers = {
+      authorization: authorization,
+      credentials: "include",
+    };
 
-      const authorization = "Bearer " + token;
-      this.headers = {
-        authorization: authorization,
-      };
-
+    try {
       api
         .get("/api/v1/beers", { headers: this.headers })
         .then((response) => {
@@ -110,7 +105,6 @@ export default {
           this.beers = response.data.map((value) => {
             const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
               value;
-            // console.log("RESPONSE DATA: ", value);
             return {
               name,
               first_brewed,
@@ -125,140 +119,85 @@ export default {
         .catch((error) => {
           console.warn("Error", error);
         });
+
+      this.$store.commit("setAuth", true);
+    } catch (e) {
+      this.$store.commit("setAuth", false);
     }
   },
-
   methods: {
-    // showDynamicComponentModal(id) {
-    //   const endpoint = "/api/v1/beers/" + id;
-    //   let stringIngredient = [];
-    //   api
-    //     .get(endpoint, { headers: this.headers })
-    //     .then((response) => {
-    //       const beer = response.data[0];
-    //       for (const ingredient in beer.ingredients) {
-    //         if (typeof beer.ingredients[ingredient] === "string") {
-    //           stringIngredient.push(
-    //             `${ingredient.toUpperCase()}: ${
-    //               beer.ingredients[ingredient]
-    //             }`
-    //           );
-    //         } else {
-    //           const desc = beer.ingredients[ingredient].map((value) => {
-    //             return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
-    //           });
-    //           stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
-    //         }
-    //       }
-    // this.$modal.show(ModalCustom, {
-    //   name: beer.name,
-    //   tagline: beer.tagline,
-    //   description: beer.description,
-    //   image_url: !beer.image_url
-    //     ? require("../assets/images/img.png")
-    //     : beer.image_url,
-    //   volume: beer.volume,
-    //   ingredients: stringIngredient,
-    //   food_pairing: beer.food_pairing.join(),
-    // });
-    //     }).catch((error) => {
-    //       console.warn("Error", error);
-    //     });
-    // },
-  },
-  getRandomBeer() {
-    const endpoint = "/api/v1/beers/random";
-    api.get(endpoint, { headers: this.headers }).then((response) => {
-      // this.showDynamicComponentModal(response.data[0].id);
-      this.descriptionModal(response.data[0].id);
-    });
-  },
-  getBeerName() {
-    const name = this.pesquisa;
-    const endpoint = `/api/v1/beers?beer_name=${name}`;
-    api.get(endpoint, { headers: this.headers }).then((response) => {
-      this.$nextTick(function () {
-        this.beers = response.data;
-        this.beers = this.beers.map((value) => {
-          const {
-            name,
-            first_brewed,
-            abv,
-            ibu,
-            ph,
-            attenuation_level,
-            id,
-            // image_url,
-          } = value;
-          console.log("RESPONSE DATA: ", value);
-          return {
-            name,
-            first_brewed,
-            abv,
-            ibu,
-            ph,
-            attenuation_level,
-            description: id,
-            // image: `<img src="${image_url}" height="100" />`,
-          };
+    getRandomBeer() {
+      const endpoint = "/api/v1/beers/random";
+      api.get(endpoint, { headers: this.headers }).then((response) => {
+        this.descriptionModal(response.data[0].id);
+      });
+    },
+    getBeerName() {
+      const name = this.pesquisa;
+      const endpoint = `/api/v1/beers?beer_name=${name}`;
+      api.get(endpoint, { headers: this.headers }).then((response) => {
+        this.$nextTick(function () {
+          this.beers = response.data;
+          this.beers = this.beers.map((value) => {
+            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
+              value;
+            return {
+              name,
+              first_brewed,
+              abv,
+              ibu,
+              ph,
+              attenuation_level,
+              description: id,
+            };
+          });
         });
       });
-    });
-  },
-  teor(valor) {
-    let teorBusca = "lt";
+    },
+    teor(valor) {
+      let teorBusca = "lt";
 
-    if (valor.target.value[0] === "1") {
-      teorBusca = "gt";
-    }
+      if (valor.target.value[0] === "1") {
+        teorBusca = "gt";
+      }
 
-    const endpoint = `/api/v1/beers?abv_${teorBusca}=10`;
-    api.get(endpoint, { headers: this.headers }).then((response) => {
-      this.$nextTick(function () {
-        this.beers = response.data;
-        this.beers = this.beers.map((value) => {
-          const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
-            value;
-          console.log("RESPONSE DATA: ", value);
-          return {
-            name,
-            first_brewed,
-            abv,
-            ibu,
-            ph,
-            attenuation_level,
-            description: id,
-          };
+      const endpoint = `/api/v1/beers?abv_${teorBusca}=10`;
+      api.get(endpoint, { headers: this.headers }).then((response) => {
+        this.$nextTick(function () {
+          this.beers = response.data;
+          this.beers = this.beers.map((value) => {
+            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
+              value;
+            console.log("RESPONSE DATA: ", value);
+            return {
+              name,
+              first_brewed,
+              abv,
+              ibu,
+              ph,
+              attenuation_level,
+              description: id,
+            };
+          });
         });
       });
-    });
-  },
-  async descriptionModal(id) {
-    console.log("ID PARA MODAL: ", id);
-    const endpoint = "/api/v1/beers/" + id;
-    // let stringIngredient = [];
+    },
+    async descriptionModal(id) {
+      const endpoint = "/api/v1/beers/" + id;
 
-    await api.get(endpoint, { headers: this.headers }).then((response) => {
-      const beer = response.data[0];
-      this.beer = beer;
-      console.log("BEER INGREDIENTES: ", beer.ingredients);
-      this.beer.ingredients_malt = beer.ingredients.malt;
-      this.beer.ingredients_hops = beer.ingredients.hops;
-      this.beer.ingredients_yeast = beer.ingredients.yeast;
-      //   for (const ingredient in beer.ingredients) {
-      //     if (typeof beer.ingredients[ingredient] === "string") {
-      //       stringIngredient.push(
-      //         `${ingredient.toUpperCase()}: ${beer.ingredients[ingredient]}`
-      //       );
-      //     } else {
-      //       const desc = beer.ingredients[ingredient].map((value) => {
-      //         return `${value.name} - ${value.amount.value} ${value.amount.unit}`;
-      //       });
-      //       stringIngredient.push(`${ingredient.toUpperCase()}: ${desc}`);
-      //     }
-      //   }
-    });
-    this.$bvModal.show("modal-1");
+      await api.get(endpoint, { headers: this.headers }).then((response) => {
+        const beer = response.data[0];
+
+        this.beer = beer;
+        (this.beer.image_url = !beer.image_url
+          ? require("../assets/images/img.png")
+          : beer.image_url),
+          (this.beer.ingredients_malt = beer.ingredients.malt);
+        this.beer.ingredients_hops = beer.ingredients.hops;
+        this.beer.ingredients_yeast = beer.ingredients.yeast;
+      });
+      this.$bvModal.show("modal-1");
+    },
   },
 };
 </script>

@@ -53,6 +53,7 @@ export default {
         })
         .then((response) => {
           localStorage.setItem("token", response.data.data.access_token);
+          this.$store.commit("setAuth", true);
           this.$router.replace("produtos");
         })
         .catch((error) => {
