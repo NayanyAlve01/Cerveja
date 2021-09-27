@@ -20,6 +20,7 @@ export default {
   props: ["usuario"],
   methods: {
     logout() {
+      this.$store.commit("setAuth", false);
       localStorage.clear();
     },
   },
