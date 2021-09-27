@@ -55,7 +55,7 @@
       <div @click="request">
         <b-pagination
           v-model="page"
-          :total-rows="325"
+          :total-rows="this.beers.length < 25 ? this.beers.length : 325"
           :per-page="this.perPage"
           aria-controls="my-table"
         ></b-pagination>
