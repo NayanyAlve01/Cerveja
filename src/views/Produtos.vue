@@ -88,18 +88,16 @@ export default {
 
   beforeMount() {
     const token = localStorage.getItem("token");
+    this.decoded = jwt_decode(token);
+    this.usuario = this.decoded.user.name;
 
-    if (!token) {
-      document.location.pathname = "/";
-    } else {
-      this.decoded = jwt_decode(token);
-      this.usuario = this.decoded.user.name;
+    const authorization = "Bearer " + token;
+    this.headers = {
+      authorization: authorization,
+      credentials: "include",
+    };
 
-      const authorization = "Bearer " + token;
-      this.headers = {
-        authorization: authorization,
-      };
-
+    try {
       api
         .get("/api/v1/beers", { headers: this.headers })
         .then((response) => {
@@ -121,9 +119,12 @@ export default {
         .catch((error) => {
           console.warn("Error", error);
         });
+
+      this.$store.commit("setAuth", true);
+    } catch (e) {
+      this.$store.commit("setAuth", false);
     }
   },
-
   methods: {
     getRandomBeer() {
       const endpoint = "/api/v1/beers/random";
@@ -138,16 +139,8 @@ export default {
         this.$nextTick(function () {
           this.beers = response.data;
           this.beers = this.beers.map((value) => {
-            const {
-              name,
-              first_brewed,
-              abv,
-              ibu,
-              ph,
-              attenuation_level,
-              id,
-            } = value;
-            console.log("RESPONSE DATA: ", value);
+            const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
+              value;
             return {
               name,
               first_brewed,
@@ -196,12 +189,12 @@ export default {
         const beer = response.data[0];
 
         this.beer = beer;
-        this.beer.image_url = !beer.image_url
-        ? require("../assets/images/img.png")
-        : beer.image_url,
-        this.beer.ingredients_malt = beer.ingredients.malt;
+        (this.beer.image_url = !beer.image_url
+          ? require("../assets/images/img.png")
+          : beer.image_url),
+          (this.beer.ingredients_malt = beer.ingredients.malt);
         this.beer.ingredients_hops = beer.ingredients.hops;
-        this.beer.ingredients_yeast = beer.ingredients.yeast;    
+        this.beer.ingredients_yeast = beer.ingredients.yeast;
       });
       this.$bvModal.show("modal-1");
     },
