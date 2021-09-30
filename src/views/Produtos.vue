@@ -1,7 +1,7 @@
 <template>
   <main>
     <Header :usuario="this.usuario" />
-    <search-bar :teor="teor" :busca="getBeerName" :random="getRandomBeer"/>
+    <search-bar :teor="teor" :busca="getBeerName" :random="getRandomBeer" />
 
     <div class="table-container">
       <div class="table-width">
@@ -32,11 +32,11 @@
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
 import { Modal, Header, SearchBar } from "@/components";
-
+import { store } from "@/store";
 
 export default {
   name: "beers",
-  components: { Header, Modal, SearchBar},
+  components: { Header, Modal, SearchBar },
   data() {
     return {
       beers: [],
@@ -58,13 +58,7 @@ export default {
     const token = localStorage.getItem("token");
     this.decoded = jwt_decode(token);
     this.usuario = this.decoded.user.name;
-
-    // const authorization = "Bearer " + token;
-    // this.headers = {
-    //   authorization: authorization,
-    //   credentials: "include",
-    // };
-
+    this.headers = store.state.headers;
     try {
       this.request();
 
@@ -180,7 +174,6 @@ export default {
   justify-content: center;
   width: 100%;
 }
-
 
 .descricao {
   color: white;

@@ -4,25 +4,27 @@
       <div class="container-login100" style="background-image">
         <b-card class="card-login">
           <div class="Login" id="login">
-          <span class="login100-form-title p-b-49 mb-4"> Login </span>
+            <span class="login100-form-title p-b-49 mb-4"> Login </span>
 
-          <div class="mb-2">Username</div>
-          <b-form-input
-            v-model="form.username"
-            placeholder="Username"
-          ></b-form-input>
+            <div class="mb-2">Username</div>
+            <b-form-input
+              v-model="form.username"
+              placeholder="Username"
+            ></b-form-input>
 
-          <div class="mb-2 mt-2">Password</div>
-          <b-form-input
-            type="password"
-            v-model="form.password"
-            placeholder="Password"
-          ></b-form-input>
-          <div class="entrar">
-          <div class="mt-3">
-            <b-button variant="outline-primary" @click="login">Entrar</b-button>
+            <div class="mb-2 mt-2">Password</div>
+            <b-form-input
+              type="password"
+              v-model="form.password"
+              placeholder="Password"
+            ></b-form-input>
+            <div class="entrar">
+              <div class="mt-3">
+                <b-button variant="outline-primary" @click="login"
+                  >Entrar</b-button
+                >
+              </div>
             </div>
-          </div>
           </div>
         </b-card>
       </div>
@@ -54,12 +56,21 @@ export default {
         .then((response) => {
           localStorage.setItem("token", response.data.data.access_token);
           this.$store.commit("setAuth", true);
+          this.$store.commit("setHeaders", this.handleHeaders());
           this.$router.replace("produtos");
         })
         .catch((error) => {
           alert("Login ou password inválidos!");
           console.log(error);
         });
+    },
+    handleHeaders() {
+      const token = localStorage.getItem("token");
+      const authorization = "Bearer " + token;
+      return {
+        authorization: authorization,
+        credentials: "include",
+      };
     },
   },
 };
@@ -70,11 +81,11 @@ main {
   justify-content: center;
   align-items: center;
 }
-.entrar{
+.entrar {
   margin: 20px 80px;
 }
 .card-login {
-  box-shadow: 1px 2px 5px rgba(0,0,0,.2);
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .button {
