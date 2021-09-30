@@ -1,44 +1,7 @@
 <template>
   <main>
     <Header :usuario="this.usuario" />
-
-    
-    <b-row>
-      <div class="teor">
-        <b-row class="ml-2">
-          <b-button
-            variant="outline-primary"
-            class="ml-4"
-            @click="teor"
-            name="teor"
-            value="0"
-          >
-            0% - 10%
-          </b-button>
-          <b-button
-            variant="outline-primary"
-            class="ml-2"
-            @click="teor"
-            name="teor"
-            value="1"
-            >10% - 55%
-          </b-button>
-        </b-row>
-      </div>
-      <div class="Busca">
-        <b-row>
-          <b-col>
-            <b-form-input v-model="pesquisa" id="txtBusca"></b-form-input>
-          </b-col>
-          <b-button variant="outline-primary" class="mr-1" @click="getBeerName"
-            >Buscar</b-button
-          >
-          <b-button variant="outline-primary" @click="getRandomBeer"
-            >Random</b-button
-          >
-        </b-row>
-      </div>
-    </b-row>
+    <search-bar :teor="teor" :busca="getBeerName" :random="getRandomBeer"/>
 
     <div class="table-container">
       <div class="table-width">
@@ -68,16 +31,16 @@
 <script>
 import api from "@/services/api.js";
 import jwt_decode from "jwt-decode";
-import { Modal, Header } from "@/components";
+import { Modal, Header, SearchBar } from "@/components";
+
 
 export default {
   name: "beers",
-  components: { Header, Modal },
+  components: { Header, Modal, SearchBar},
   data() {
     return {
       beers: [],
       beer: {},
-      pesquisa: "",
       usuario: "",
       headers: {},
       page: 1,
@@ -96,11 +59,11 @@ export default {
     this.decoded = jwt_decode(token);
     this.usuario = this.decoded.user.name;
 
-    const authorization = "Bearer " + token;
-    this.headers = {
-      authorization: authorization,
-      credentials: "include",
-    };
+    // const authorization = "Bearer " + token;
+    // this.headers = {
+    //   authorization: authorization,
+    //   credentials: "include",
+    // };
 
     try {
       this.request();
@@ -118,8 +81,7 @@ export default {
         this.descriptionModal(response.data[0].id);
       });
     },
-    getBeerName() {
-      const name = this.pesquisa;
+    getBeerName(name) {
       const endpoint = `/api/v1/beers?beer_name=${name}`;
       api.get(endpoint, { headers: this.headers }).then((response) => {
         this.$nextTick(function () {
@@ -154,7 +116,6 @@ export default {
           this.beers = this.beers.map((value) => {
             const { name, first_brewed, abv, ibu, ph, attenuation_level, id } =
               value;
-            console.log("RESPONSE DATA: ", value);
             return {
               name,
               first_brewed,
@@ -220,14 +181,7 @@ export default {
   width: 100%;
 }
 
-.teor {
-  margin: 20px 120px;
-  width: 20%;
-}
-.Busca {
-  width: 50%;
-  margin: 20px;
-}
+
 .descricao {
   color: white;
   background-color: #8b8989;
